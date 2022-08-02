@@ -1,4 +1,4 @@
-![ucpi Network](sn-logo.png)
+![ucpi Network](sn-logo.jpeg)
 
 <div align="center">
   
