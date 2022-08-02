@@ -1,12 +1,12 @@
 [package]
-name = "secret-enclave"
+name = "ucpi-enclave"
 version = "1.2.4"
-authors = ["SCRT Labs <info@scrtlabs.com>"]
+authors = ["ucpi Labs <info@ucpilabs.com>"]
 edition = "2018"
 description = "An enclave running wasmi, to be used by cosmwasm-sgx-vm"
 
 [lib]
-name = "secret_enclave"
+name = "ucpi_enclave"
 crate-type = ["staticlib"]
 
 [features]

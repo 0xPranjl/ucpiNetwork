@@ -1,4 +1,4 @@
-if [ "$SECRET_NODE_TYPE" == "BOOTSTRAP" ]
+if [ "$ucpi_NODE_TYPE" == "BOOTSTRAP" ]
 then
     ./bootstrap_init.sh
 else

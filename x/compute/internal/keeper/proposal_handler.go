@@ -4,7 +4,7 @@ package keeper
 import (
 	"fmt"
 
-	"github.com/enigmampc/SecretNetwork/x/compute/internal/types"
+	"github.com/enigmampc/ucpiNetwork/x/compute/internal/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"

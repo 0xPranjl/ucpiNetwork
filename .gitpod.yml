@@ -1,11 +1,11 @@
-image: ghcr.io/scrtlabs/secretnetwork-dev:latest
+image: ghcr.io/ucpilabs/ucpinetwork-dev:latest
 
 tasks:
   - name: set up permissions
     command: |
       sudo chown gitpod:gitpod /go -R
       sudo chown gitpod:gitpod /usr/local/cargo -R
-      export SCRT_ENCLAVE_DIR=/workspace/SecretNetwork/go-cosmwasm/
+      export ucpi_ENCLAVE_DIR=/workspace/ucpiNetwork/go-cosmwasm/
 
 vscode:
   extensions:

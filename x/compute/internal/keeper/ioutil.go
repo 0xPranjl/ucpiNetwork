@@ -6,7 +6,7 @@ import (
 	"io"
 	"io/ioutil"
 
-	"github.com/enigmampc/SecretNetwork/x/compute/internal/types"
+	"github.com/enigmampc/ucpiNetwork/x/compute/internal/types"
 )
 
 // magic bytes to identify gzip.

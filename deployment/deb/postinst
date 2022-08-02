@@ -8,16 +8,16 @@ then
     export SUDO_USER=root
 fi
 
-cat <<EOF > /etc/systemd/system/secret-node.service
+cat <<EOF > /etc/systemd/system/ucpi-node.service
 [Unit]
-Description=Secret node service
+Description=ucpi node service
 After=network.target
 
 [Service]
 Type=simple
-Environment=SCRT_ENCLAVE_DIR=/usr/lib
+Environment=ucpi_ENCLAVE_DIR=/usr/lib
 WorkingDirectory=$(eval echo ~"$SUDO_USER")
-ExecStart=/usr/local/bin/secretd start
+ExecStart=/usr/local/bin/ucpid start
 User=$SUDO_USER
 Restart=on-failure
 StartLimitInterval=0
@@ -31,7 +31,7 @@ EOF
 
 systemctl daemon-reload
 
-mkdir -p "/opt/secret/.sgx_secrets"
-chown -R "$SUDO_USER":"$SUDO_USER" "/opt/secret/.sgx_secrets"
-mkdir -p "/opt/secret/.secretd/.node"
-mkdir -p "$(eval echo ~"$SUDO_USER")/.sgx_secrets"
+mkdir -p "/opt/ucpi/.sgx_ucpis"
+chown -R "$SUDO_USER":"$SUDO_USER" "/opt/ucpi/.sgx_ucpis"
+mkdir -p "/opt/ucpi/.ucpid/.node"
+mkdir -p "$(eval echo ~"$SUDO_USER")/.sgx_ucpis"

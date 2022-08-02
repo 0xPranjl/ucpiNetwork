@@ -2,11 +2,11 @@ package main
 
 import (
 	serverconfig "github.com/cosmos/cosmos-sdk/server/config"
-	"github.com/enigmampc/SecretNetwork/x/compute"
+	"github.com/enigmampc/ucpiNetwork/x/compute"
 )
 
-// SecretAppConfig terra specify app config
-type SecretAppConfig struct {
+// ucpiAppConfig terra specify app config
+type ucpiAppConfig struct {
 	serverconfig.Config
 
 	WASMConfig compute.WasmConfig `mapstructure:"wasm"`
@@ -31,18 +31,18 @@ func initAppConfig() (string, interface{}) {
 	//   own app.toml to override, or use this default value.
 	//
 	// In simapp, we set the min gas prices to 0.
-	srvCfg.MinGasPrices = "0.0125uscrt"
+	srvCfg.MinGasPrices = "0.0125uucpi"
 	srvCfg.API.Enable = true
 	srvCfg.API.Swagger = true
 	srvCfg.API.EnableUnsafeCORS = true
 	srvCfg.IAVLCacheSize = 781_250
 
-	secretAppConfig := SecretAppConfig{
+	ucpiAppConfig := ucpiAppConfig{
 		Config:     *srvCfg,
 		WASMConfig: *compute.DefaultWasmConfig(),
 	}
 
-	secretAppTemplate := serverconfig.DefaultConfigTemplate + compute.DefaultConfigTemplate
+	ucpiAppTemplate := serverconfig.DefaultConfigTemplate + compute.DefaultConfigTemplate
 
-	return secretAppTemplate, secretAppConfig
+	return ucpiAppTemplate, ucpiAppConfig
 }

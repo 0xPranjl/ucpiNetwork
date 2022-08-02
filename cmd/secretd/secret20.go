@@ -12,8 +12,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/enigmampc/SecretNetwork/x/compute"
-	"github.com/enigmampc/SecretNetwork/x/compute/client/cli"
+	"github.com/enigmampc/ucpiNetwork/x/compute"
+	"github.com/enigmampc/ucpiNetwork/x/compute/client/cli"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -27,7 +27,7 @@ const (
 func S20GetQueryCmd() *cobra.Command {
 	s20QueryCmd := &cobra.Command{
 		Use:                        "snip20",
-		Short:                      "Querying commands for the secret20 contracts",
+		Short:                      "Querying commands for the ucpi20 contracts",
 		DisableFlagParsing:         true,
 		SuggestionsMinimumDistance: 2,
 		RunE:                       client.ValidateCmd,
@@ -282,7 +282,7 @@ func s20TransferCmd() *cobra.Command {
 func s20CreatingViewingKey() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "create-viewing-key [contract address or label]",
-		Short: "Create a new viewing key. To view the resulting key, use 'secretcli q compute tx <TX_HASH>'",
+		Short: "Create a new viewing key. To view the resulting key, use 'ucpicli q compute tx <TX_HASH>'",
 		Long: `This allows a user to generate a key that enables off-chain queries. 
 This way you can perform balance and transaction history queries without waiting for a transaction on-chain.`,
 		Args: cobra.ExactArgs(1),
@@ -320,7 +320,7 @@ func s20SetViewingKey() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "set-viewing-key [contract address or label] [viewing-key]",
 		Short: "Sets the viewing key for your account",
-		Long: `This command is useful if you want to manage multiple secret tokens with the same viewing key.
+		Long: `This command is useful if you want to manage multiple ucpi tokens with the same viewing key.
 *WARNING*: This should only be used to duplicate keys created with the create-viewing-key command, or if you really really know what
 you're doing`,
 		Args: cobra.ExactArgs(2),
@@ -350,8 +350,8 @@ you're doing`,
 func s20DepositCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "deposit [contract address or label]",
-		Short: "Convert your SCRT into a secret token",
-		Long:  `Convert your SCRT into a secret token. This command will only work if the token supports native currency conversion`,
+		Short: "Convert your ucpi into a ucpi token",
+		Long:  `Convert your ucpi into a ucpi token. This command will only work if the token supports native currency conversion`,
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// inBuf := bufio.NewReader(cmd.InOrStdin())
@@ -374,7 +374,7 @@ func s20DepositCmd() *cobra.Command {
 	}
 
 	flags.AddTxFlagsToCmd(cmd)
-	cmd.Flags().String(flagAmount, "", "The amount of currency to deposit in the contract, e.g. 1000000uscrt")
+	cmd.Flags().String(flagAmount, "", "The amount of currency to deposit in the contract, e.g. 1000000uucpi")
 	_ = cmd.MarkFlagRequired(flagAmount)
 
 	return cmd
@@ -383,8 +383,8 @@ func s20DepositCmd() *cobra.Command {
 func s20Redeem() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "redeem [contract address or label] [amount]",
-		Short: "Convert your secret token back to SCRT",
-		Long:  `Convert your secret token back to SCRT. This command will only work if the token supports native currency conversion`,
+		Short: "Convert your ucpi token back to ucpi",
+		Long:  `Convert your ucpi token back to ucpi. This command will only work if the token supports native currency conversion`,
 		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// inBuf := bufio.NewReader(cmd.InOrStdin())

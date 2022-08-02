@@ -18,10 +18,10 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 
-	"github.com/enigmampc/SecretNetwork/x/compute/client/cli"
-	"github.com/enigmampc/SecretNetwork/x/compute/client/rest"
-	"github.com/enigmampc/SecretNetwork/x/compute/internal/keeper"
-	"github.com/enigmampc/SecretNetwork/x/compute/internal/types"
+	"github.com/enigmampc/ucpiNetwork/x/compute/client/cli"
+	"github.com/enigmampc/ucpiNetwork/x/compute/client/rest"
+	"github.com/enigmampc/ucpiNetwork/x/compute/internal/keeper"
+	"github.com/enigmampc/ucpiNetwork/x/compute/internal/types"
 )
 
 var (

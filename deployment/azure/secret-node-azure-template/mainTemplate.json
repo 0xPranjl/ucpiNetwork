@@ -22,21 +22,21 @@
     },
     "chainId": {
       "type": "string",
-      "defaultValue": "secret-2",
+      "defaultValue": "ucpi-2",
       "metadata": {
         "description": "The blockchain software to install on the VM"
       }
     },
     "moniker": {
       "type": "string",
-      "defaultValue": "AzureSecretNodeDefault2",
+      "defaultValue": "AzureucpiNodeDefault2",
       "metadata": {
         "description": "The blockchain software to install on the VM"
       }
     },
     "rpcUrl": {
       "type": "string",
-      "defaultValue": "secret-2.node.enigma.co:26657",
+      "defaultValue": "ucpi-2.node.enigma.co:26657",
       "metadata": {
         "description": "The blockchain software to install on the VM"
       }
@@ -50,7 +50,7 @@
     },
     "persistentPeers": {
       "type": "string",
-      "defaultValue": "115aa0a629f5d70dd1d464bc7e42799e00f4edae@secret-2.node.enigma.co:26656",
+      "defaultValue": "115aa0a629f5d70dd1d464bc7e42799e00f4edae@ucpi-2.node.enigma.co:26656",
       "metadata": {
         "description": "List of peers to intially connect to"
       }
@@ -158,7 +158,7 @@
             }
           },
           {
-            "name": "secret-network-rpc",
+            "name": "ucpi-network-rpc",
             "properties": {
               "protocol": "TCP",
               "sourcePortRange": "*",
@@ -319,12 +319,12 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-            "[uri(parameters('_artifactsLocation'), concat('scripts/secretnode.sh', parameters('_artifactsLocationSasToken')))]",
+            "[uri(parameters('_artifactsLocation'), concat('scripts/ucpinode.sh', parameters('_artifactsLocationSasToken')))]",
             "[parameters('cfUri')]"
           ]
         },
         "protectedSettings": {
-          "commandToExecute": "[concat('sh secretnode.sh',' ',parameters('adminUsername'),' ',parameters('chainId'),' ',parameters('moniker'),' ',parameters('persistentPeers'),' ',parameters('rpcUrl'),' ',parameters('registrationService'),' ',parameters('cfUri'))]"
+          "commandToExecute": "[concat('sh ucpinode.sh',' ',parameters('adminUsername'),' ',parameters('chainId'),' ',parameters('moniker'),' ',parameters('persistentPeers'),' ',parameters('rpcUrl'),' ',parameters('registrationService'),' ',parameters('cfUri'))]"
         }
       }
     },

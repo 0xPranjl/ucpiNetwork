@@ -5,7 +5,7 @@ import (
 	"bufio"
 	"strconv"
 
-	"github.com/enigmampc/SecretNetwork/x/compute/internal/types"
+	"github.com/enigmampc/ucpiNetwork/x/compute/internal/types"
 	"github.com/cosmos/cosmos-sdk/client/context"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"

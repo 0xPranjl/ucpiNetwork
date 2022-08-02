@@ -26,7 +26,7 @@ transfered to the owners account. (The ownership can also be transfered).
 
 ## Using this project
 
-You should check out [Developing](https://build.scrt.network/dev/tutorials.html) to explain more on how to run
+You should check out [Developing](https://build.ucpi.network/dev/tutorials.html) to explain more on how to run
 tests and develop code. Or go through the
-[online tutorial](https://learn.figment.io/network-documentation/secret) to get a
+[online tutorial](https://learn.figment.io/network-documentation/ucpi) to get a
 better feel of how to develop.

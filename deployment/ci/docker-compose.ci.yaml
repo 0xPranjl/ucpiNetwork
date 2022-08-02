@@ -23,8 +23,8 @@ services:
       - /dev/sgx/provision
     volumes:
       - /tmp/aesmd:/var/run/aesmd
-      - /tmp/secretd:/root/.secretd
-      - /tmp/secretcli:/root/.secretcli
+      - /tmp/ucpid:/root/.ucpid
+      - /tmp/ucpicli:/root/.ucpicli
     stdin_open: true
     tty: true
     deploy:
@@ -43,8 +43,8 @@ services:
       - /dev/sgx/provision
     volumes:
       - /tmp/aesmd:/var/run/aesmd
-      - /tmp/secretd:/root/.secretd
-      # - /tmp/secretcli:/root/.secretcli
+      - /tmp/ucpid:/root/.ucpid
+      # - /tmp/ucpicli:/root/.ucpicli
     stdin_open: true
     tty: true
     environment:
@@ -63,8 +63,8 @@ services:
       - /dev/sgx/provision
     volumes:
       - /tmp/aesmd:/var/run/aesmd
-      - /tmp/secretd:/tmp/.secretd
-      # - /tmp/secretcli:/root/.secretcli
+      - /tmp/ucpid:/tmp/.ucpid
+      # - /tmp/ucpicli:/root/.ucpicli
     stdin_open: true
     tty: true
     environment:
@@ -80,8 +80,8 @@ services:
       - /dev/sgx/provision
     volumes:
       - /tmp/aesmd:/var/run/aesmd
-      - /tmp/secretd:/tmp/.secretd
-      - /tmp/secretcli:/root/.secretcli
+      - /tmp/ucpid:/tmp/.ucpid
+      - /tmp/ucpicli:/root/.ucpicli
     stdin_open: true
     tty: true
     environment:

@@ -8,7 +8,7 @@ package keeper
 // 	"os"
 // 	"testing"
 
-// 	"github.com/enigmampc/SecretNetwork/x/compute/internal/types"
+// 	"github.com/enigmampc/ucpiNetwork/x/compute/internal/types"
 // 	sdk "github.com/cosmos/cosmos-sdk/types"
 // 	"github.com/cosmos/cosmos-sdk/x/gov"
 // 	"github.com/cosmos/cosmos-sdk/x/params"

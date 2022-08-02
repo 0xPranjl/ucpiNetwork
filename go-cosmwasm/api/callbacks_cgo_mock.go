@@ -1,5 +1,5 @@
-//go:build secretcli
-// +build secretcli
+//go:build ucpicli
+// +build ucpicli
 
 package api
 

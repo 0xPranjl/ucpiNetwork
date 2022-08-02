@@ -11,7 +11,7 @@ pub struct Keychain {
     consensus_state_ikm: Option<AESKey>,
     consensus_seed_exchange_keypair: Option<KeyPair>,
     consensus_io_exchange_keypair: Option<KeyPair>,
-    consensus_callback_secret: Option<AESKey>,
+    consensus_callback_ucpi: Option<AESKey>,
     registration_key: Option<KeyPair>,
 }
 
@@ -38,7 +38,7 @@ impl Keychain {
             consensus_state_ikm: None,
             consensus_seed_exchange_keypair: None,
             consensus_io_exchange_keypair: None,
-            consensus_callback_secret: None,
+            consensus_callback_ucpi: None,
         };
 
         let _ = x.generate_consensus_master_keys();
@@ -102,9 +102,9 @@ impl Keychain {
         })
     }
 
-    pub fn get_consensus_callback_secret(&self) -> Result<AESKey, CryptoError> {
-        self.consensus_callback_secret.ok_or_else(|| {
-            error!("Error accessing consensus_callback_secret (does not exist, or was not initialized)");
+    pub fn get_consensus_callback_ucpi(&self) -> Result<AESKey, CryptoError> {
+        self.consensus_callback_ucpi.ok_or_else(|| {
+            error!("Error accessing consensus_callback_ucpi (does not exist, or was not initialized)");
             CryptoError::ParsingError
         })
     }
@@ -137,8 +137,8 @@ impl Keychain {
         self.consensus_state_ikm = Some(consensus_state_ikm);
     }
 
-    pub fn set_consensus_callback_secret(&mut self, consensus_callback_secret: AESKey) {
-        self.consensus_callback_secret = Some(consensus_callback_secret);
+    pub fn set_consensus_callback_ucpi(&mut self, consensus_callback_ucpi: AESKey) {
+        self.consensus_callback_ucpi = Some(consensus_callback_ucpi);
     }
 
     pub fn set_consensus_seed(&mut self, consensus_seed: Seed) -> Result<(), EnclaveError> {
@@ -196,16 +196,16 @@ impl Keychain {
         );
         self.set_consensus_state_ikm(consensus_state_ikm);
 
-        let consensus_callback_secret = self
+        let consensus_callback_ucpi = self
             .consensus_seed
             .unwrap()
-            .derive_key_from_this(&CONSENSUS_CALLBACK_SECRET_DERIVE_ORDER.to_be_bytes());
+            .derive_key_from_this(&CONSENSUS_CALLBACK_ucpi_DERIVE_ORDER.to_be_bytes());
 
         trace!(
             "consensus_state_ikm: {:?}",
             hex::encode(consensus_state_ikm.get())
         );
-        self.set_consensus_callback_secret(consensus_callback_secret);
+        self.set_consensus_callback_ucpi(consensus_callback_ucpi);
 
         Ok(())
     }
@@ -322,13 +322,13 @@ pub mod tests {
     //
     //     let encrypted_msg = key.encrypt_siv(msg.as_bytes(), &[&[]]);
     //
-    //     let secret_msg = SecretMessage {
+    //     let ucpi_msg = ucpiMessage {
     //         nonce,
     //         user_public_key,
     //         msg: encrypted_msg,
     //     };
     //
-    //     let decrypted_msg = secret_msg.decrypt()?;
+    //     let decrypted_msg = ucpi_msg.decrypt()?;
     //
     //     assert_eq!(decrypted_msg, msg)
     // }

@@ -38,7 +38,7 @@ was sent:
     },
     {
       "key": "signer",
-      "value": "secret1vx8knpllrj7n963p9ttd80w47kpacrhuts497x"
+      "value": "ucpi1vx8knpllrj7n963p9ttd80w47kpacrhuts497x"
     },
     {
       "key": "code_id",
@@ -46,7 +46,7 @@ was sent:
     },
     {
       "key": "contract_address",
-      "value": "secret18vd8fpwxzck93qlwghaj6arh4p7c5n8978vsyg"
+      "value": "ucpi18vd8fpwxzck93qlwghaj6arh4p7c5n8978vsyg"
     }
   ]
 }
@@ -63,11 +63,11 @@ provide a initial balance in the same `MsgInstantiateContract`. We see the follo
     "Attr": [
       {
         "key": "recipient",
-        "value": "secret18vd8fpwxzck93qlwghaj6arh4p7c5n8978vsyg"
+        "value": "ucpi18vd8fpwxzck93qlwghaj6arh4p7c5n8978vsyg"
       },
       {
         "key": "sender",
-        "value": "secret1ffnqn02ft2psvyv4dyr56nnv6plllf9pm2kpmv"
+        "value": "ucpi1ffnqn02ft2psvyv4dyr56nnv6plllf9pm2kpmv"
       },
       {
         "key": "amount",
@@ -90,7 +90,7 @@ Here is an example from the escrow contract successfully releasing funds to the 
   "Attr": [
     {
       "key": "contract_address",
-      "value": "secret18vd8fpwxzck93qlwghaj6arh4p7c5n8978vsyg"
+      "value": "ucpi18vd8fpwxzck93qlwghaj6arh4p7c5n8978vsyg"
     },
     {
       "key": "action",
@@ -98,7 +98,7 @@ Here is an example from the escrow contract successfully releasing funds to the 
     },
     {
       "key": "destination",
-      "value": "secret14k7v7ms4jxkk2etmg9gljxjm4ru3qjdugfsflq"
+      "value": "ucpi14k7v7ms4jxkk2etmg9gljxjm4ru3qjdugfsflq"
     }
   ]
 }
@@ -124,11 +124,11 @@ was executed (which always appears, while 2 is optional and has information as r
     "Attr": [
       {
         "key": "recipient",
-        "value": "secret18vd8fpwxzck93qlwghaj6arh4p7c5n8978vsyg"
+        "value": "ucpi18vd8fpwxzck93qlwghaj6arh4p7c5n8978vsyg"
       },
       {
         "key": "sender",
-        "value": "secret1zm074khx32hqy20hlshlsd423n07pwlu9cpt37"
+        "value": "ucpi1zm074khx32hqy20hlshlsd423n07pwlu9cpt37"
       },
       {
         "key": "amount",
@@ -141,7 +141,7 @@ was executed (which always appears, while 2 is optional and has information as r
     "Attr": [
       {
         "key": "contract_address",
-        "value": "secret18vd8fpwxzck93qlwghaj6arh4p7c5n8978vsyg"
+        "value": "ucpi18vd8fpwxzck93qlwghaj6arh4p7c5n8978vsyg"
       },
       {
         "key": "action",
@@ -149,7 +149,7 @@ was executed (which always appears, while 2 is optional and has information as r
       },
       {
         "key": "destination",
-        "value": "secret14k7v7ms4jxkk2etmg9gljxjm4ru3qjdugfsflq"
+        "value": "ucpi14k7v7ms4jxkk2etmg9gljxjm4ru3qjdugfsflq"
       }
     ]
   },
@@ -158,11 +158,11 @@ was executed (which always appears, while 2 is optional and has information as r
     "Attr": [
       {
         "key": "recipient",
-        "value": "secret14k7v7ms4jxkk2etmg9gljxjm4ru3qjdugfsflq"
+        "value": "ucpi14k7v7ms4jxkk2etmg9gljxjm4ru3qjdugfsflq"
       },
       {
         "key": "sender",
-        "value": "secret18vd8fpwxzck93qlwghaj6arh4p7c5n8978vsyg"
+        "value": "ucpi18vd8fpwxzck93qlwghaj6arh4p7c5n8978vsyg"
       },
       {
         "key": "amount",
@@ -183,11 +183,11 @@ was executed (which always appears, while 2 is optional and has information as r
       },
       {
         "key": "signer",
-        "value": "secret1zm074khx32hqy20hlshlsd423n07pwlu9cpt37"
+        "value": "ucpi1zm074khx32hqy20hlshlsd423n07pwlu9cpt37"
       },
       {
         "key": "contract_address",
-        "value": "secret18vd8fpwxzck93qlwghaj6arh4p7c5n8978vsyg"
+        "value": "ucpi18vd8fpwxzck93qlwghaj6arh4p7c5n8978vsyg"
       }
     ]
   }

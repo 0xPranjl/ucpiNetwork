@@ -77,8 +77,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/upgrade"
 	upgradeclient "github.com/cosmos/cosmos-sdk/x/upgrade/client"
 
-	wasmtypes "github.com/enigmampc/SecretNetwork/x/compute/internal/types"
-	"github.com/enigmampc/SecretNetwork/x/registration"
+	wasmtypes "github.com/enigmampc/ucpiNetwork/x/compute/internal/types"
+	"github.com/enigmampc/ucpiNetwork/x/registration"
 )
 
 const (
@@ -150,7 +150,7 @@ type TestKeepers struct {
 }
 
 var TestConfig = TestConfigType{
-	ChainID: "test-secret-X",
+	ChainID: "test-ucpi-X",
 }
 
 type TestConfigType struct {
@@ -571,7 +571,7 @@ func keyPubAddr() (crypto.PrivKey, crypto.PubKey, sdk.AccAddress) {
 	seed := make([]byte, 8)
 	binary.BigEndian.PutUint64(seed, keyCounter)
 
-	key := secp256k1.GenPrivKeyFromSecret(seed)
+	key := secp256k1.GenPrivKeyFromucpi(seed)
 	pub := key.PubKey()
 	addr := sdk.AccAddress(pub.Address())
 	return key, pub, addr

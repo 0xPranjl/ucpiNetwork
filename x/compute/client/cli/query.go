@@ -15,7 +15,7 @@ import (
 	authtx "github.com/cosmos/cosmos-sdk/x/auth/tx"
 
 	sdkErrors "github.com/cosmos/cosmos-sdk/types/errors"
-	cosmwasmTypes "github.com/enigmampc/SecretNetwork/go-cosmwasm/types"
+	cosmwasmTypes "github.com/enigmampc/ucpiNetwork/go-cosmwasm/types"
 	flag "github.com/spf13/pflag"
 
 	"github.com/spf13/cobra"
@@ -24,10 +24,10 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	wasmUtils "github.com/enigmampc/SecretNetwork/x/compute/client/utils"
+	wasmUtils "github.com/enigmampc/ucpiNetwork/x/compute/client/utils"
 
-	"github.com/enigmampc/SecretNetwork/x/compute/internal/keeper"
-	"github.com/enigmampc/SecretNetwork/x/compute/internal/types"
+	"github.com/enigmampc/ucpiNetwork/x/compute/internal/keeper"
+	"github.com/enigmampc/ucpiNetwork/x/compute/internal/types"
 )
 
 func GetQueryCmd() *cobra.Command {
@@ -545,7 +545,7 @@ func QueryWithData(contractAddress sdk.AccAddress, queryData []byte, cliCtx clie
 		return fmt.Errorf("contract not found: %s", contractAddress)
 	}
 
-	msg := types.SecretMsg{
+	msg := types.ucpiMsg{
 		CodeHash: codeHash,
 		Msg:      queryData,
 	}

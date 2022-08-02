@@ -93,9 +93,9 @@ whitespace += $(whitespace)
 comma := ,
 build_tags_comma_sep := $(subst $(whitespace),$(comma),$(build_tags))
 
-ldflags = -X github.com/cosmos/cosmos-sdk/version.Name=SecretNetwork \
-	-X github.com/cosmos/cosmos-sdk/version.AppName=secretd \
-	-X github.com/enigmampc/SecretNetwork/cmd/secretcli/version.ClientName=secretcli \
+ldflags = -X github.com/cosmos/cosmos-sdk/version.Name=ucpiNetwork \
+	-X github.com/cosmos/cosmos-sdk/version.AppName=ucpid \
+	-X github.com/enigmampc/ucpiNetwork/cmd/ucpicli/version.ClientName=ucpicli \
 	-X github.com/cosmos/cosmos-sdk/version.Version=$(VERSION) \
 	-X github.com/cosmos/cosmos-sdk/version.Commit=$(COMMIT) \
 	-X "github.com/cosmos/cosmos-sdk/version.BuildTags=$(build_tags)"
@@ -130,14 +130,14 @@ go.sum: go.mod
 	GO111MODULE=on go mod verify
 
 build_cli:
-	go build -o secretcli -mod=readonly -tags "$(GO_TAGS) secretcli" -ldflags '$(LD_FLAGS)' ./cmd/secretd
+	go build -o ucpicli -mod=readonly -tags "$(GO_TAGS) ucpicli" -ldflags '$(LD_FLAGS)' ./cmd/ucpid
 
-xgo_build_secretcli: go.sum
+xgo_build_ucpicli: go.sum
 	@echo "--> WARNING! This builds from origin/$(CURRENT_BRANCH)!"
-	xgo --targets $(XGO_TARGET) -tags="$(GO_TAGS) secretcli" -ldflags '$(LD_FLAGS)' --branch $(CURRENT_BRANCH) github.com/enigmampc/SecretNetwork/cmd/secretd
+	xgo --targets $(XGO_TARGET) -tags="$(GO_TAGS) ucpicli" -ldflags '$(LD_FLAGS)' --branch $(CURRENT_BRANCH) github.com/enigmampc/ucpiNetwork/cmd/ucpid
 build_local_no_rust: bin-data-$(IAS_BUILD)
 	cp go-cosmwasm/target/$(BUILD_PROFILE)/libgo_cosmwasm.so go-cosmwasm/api
-	go build -mod=readonly -tags "$(GO_TAGS)" -ldflags '$(LD_FLAGS)' ./cmd/secretd
+	go build -mod=readonly -tags "$(GO_TAGS)" -ldflags '$(LD_FLAGS)' ./cmd/ucpid
 
 build-linux: _build-linux build_local_no_rust build_cli
 _build-linux: vendor
@@ -148,24 +148,24 @@ _build-linux-with-query: vendor
 	BUILD_PROFILE=$(BUILD_PROFILE) FEATURES=$(FEATURES) FEATURES_U=query-node,$(FEATURES_U) $(MAKE) -C go-cosmwasm build-rust
 
 build_windows_cli:
-	$(MAKE) xgo_build_secretcli XGO_TARGET=windows/amd64
-	mv secretd-windows-* secretcli-windows-amd64.exe
+	$(MAKE) xgo_build_ucpicli XGO_TARGET=windows/amd64
+	mv ucpid-windows-* ucpicli-windows-amd64.exe
 
 build_macos_cli:
-	$(MAKE) xgo_build_secretcli XGO_TARGET=darwin/amd64
-	mv secretd-darwin-* secretcli-macos-amd64
+	$(MAKE) xgo_build_ucpicli XGO_TARGET=darwin/amd64
+	mv ucpid-darwin-* ucpicli-macos-amd64
 
 build_macos_arm64_cli:
-	$(MAKE) xgo_build_secretcli XGO_TARGET=darwin/arm64
-	mv secretd-darwin-* secretcli-macos-arm64
+	$(MAKE) xgo_build_ucpicli XGO_TARGET=darwin/arm64
+	mv ucpid-darwin-* ucpicli-macos-arm64
 
 build_linux_cli:
-	$(MAKE) xgo_build_secretcli XGO_TARGET=linux/amd64
-	mv secretd-linux-amd64 secretcli-linux-amd64
+	$(MAKE) xgo_build_ucpicli XGO_TARGET=linux/amd64
+	mv ucpid-linux-amd64 ucpicli-linux-amd64
 
 build_linux_arm64_cli:
-	$(MAKE) xgo_build_secretcli XGO_TARGET=linux/arm64
-	mv secretd-linux-arm64 secretcli-linux-arm64
+	$(MAKE) xgo_build_ucpicli XGO_TARGET=linux/arm64
+	mv ucpid-linux-arm64 ucpicli-linux-arm64
 
 build_all: build-linux build_windows_cli build_macos_cli build_linux_arm64_cli
 
@@ -175,68 +175,68 @@ deb-no-compile:
     ifneq ($(UNAME_S),Linux)
 		exit 1
     endif
-	rm -rf /tmp/SecretNetwork
+	rm -rf /tmp/ucpiNetwork
 
-	mkdir -p /tmp/SecretNetwork/deb/$(DEB_BIN_DIR)
-	cp -f ./secretcli /tmp/SecretNetwork/deb/$(DEB_BIN_DIR)/secretcli
-	cp -f ./secretd /tmp/SecretNetwork/deb/$(DEB_BIN_DIR)/secretd
-	chmod +x /tmp/SecretNetwork/deb/$(DEB_BIN_DIR)/secretd /tmp/SecretNetwork/deb/$(DEB_BIN_DIR)/secretcli
+	mkdir -p /tmp/ucpiNetwork/deb/$(DEB_BIN_DIR)
+	cp -f ./ucpicli /tmp/ucpiNetwork/deb/$(DEB_BIN_DIR)/ucpicli
+	cp -f ./ucpid /tmp/ucpiNetwork/deb/$(DEB_BIN_DIR)/ucpid
+	chmod +x /tmp/ucpiNetwork/deb/$(DEB_BIN_DIR)/ucpid /tmp/ucpiNetwork/deb/$(DEB_BIN_DIR)/ucpicli
 
-	mkdir -p /tmp/SecretNetwork/deb/$(DEB_LIB_DIR)
-	cp -f ./go-cosmwasm/api/libgo_cosmwasm.so ./go-cosmwasm/librust_cosmwasm_enclave.signed.so ./go-cosmwasm/librust_cosmwasm_query_enclave.signed.so /tmp/SecretNetwork/deb/$(DEB_LIB_DIR)/
-	chmod +x /tmp/SecretNetwork/deb/$(DEB_LIB_DIR)/lib*.so
+	mkdir -p /tmp/ucpiNetwork/deb/$(DEB_LIB_DIR)
+	cp -f ./go-cosmwasm/api/libgo_cosmwasm.so ./go-cosmwasm/librust_cosmwasm_enclave.signed.so ./go-cosmwasm/librust_cosmwasm_query_enclave.signed.so /tmp/ucpiNetwork/deb/$(DEB_LIB_DIR)/
+	chmod +x /tmp/ucpiNetwork/deb/$(DEB_LIB_DIR)/lib*.so
 
-	mkdir -p /tmp/SecretNetwork/deb/DEBIAN
-	cp ./deployment/deb/control /tmp/SecretNetwork/deb/DEBIAN/control
-	printf "Version: " >> /tmp/SecretNetwork/deb/DEBIAN/control
-	printf "$(VERSION)" >> /tmp/SecretNetwork/deb/DEBIAN/control
-	echo "" >> /tmp/SecretNetwork/deb/DEBIAN/control
-	cp ./deployment/deb/postinst /tmp/SecretNetwork/deb/DEBIAN/postinst
-	chmod 755 /tmp/SecretNetwork/deb/DEBIAN/postinst
-	cp ./deployment/deb/postrm /tmp/SecretNetwork/deb/DEBIAN/postrm
-	chmod 755 /tmp/SecretNetwork/deb/DEBIAN/postrm
-	cp ./deployment/deb/triggers /tmp/SecretNetwork/deb/DEBIAN/triggers
-	chmod 755 /tmp/SecretNetwork/deb/DEBIAN/triggers
-	dpkg-deb --build /tmp/SecretNetwork/deb/ .
-	-rm -rf /tmp/SecretNetwork
+	mkdir -p /tmp/ucpiNetwork/deb/DEBIAN
+	cp ./deployment/deb/control /tmp/ucpiNetwork/deb/DEBIAN/control
+	printf "Version: " >> /tmp/ucpiNetwork/deb/DEBIAN/control
+	printf "$(VERSION)" >> /tmp/ucpiNetwork/deb/DEBIAN/control
+	echo "" >> /tmp/ucpiNetwork/deb/DEBIAN/control
+	cp ./deployment/deb/postinst /tmp/ucpiNetwork/deb/DEBIAN/postinst
+	chmod 755 /tmp/ucpiNetwork/deb/DEBIAN/postinst
+	cp ./deployment/deb/postrm /tmp/ucpiNetwork/deb/DEBIAN/postrm
+	chmod 755 /tmp/ucpiNetwork/deb/DEBIAN/postrm
+	cp ./deployment/deb/triggers /tmp/ucpiNetwork/deb/DEBIAN/triggers
+	chmod 755 /tmp/ucpiNetwork/deb/DEBIAN/triggers
+	dpkg-deb --build /tmp/ucpiNetwork/deb/ .
+	-rm -rf /tmp/ucpiNetwork
 
 clean:
-	-rm -rf /tmp/SecretNetwork
-	-rm -f ./secretcli*
-	-rm -f ./secretd*
+	-rm -rf /tmp/ucpiNetwork
+	-rm -f ./ucpicli*
+	-rm -f ./ucpid*
 	-find -name '*.so' -delete
 	-rm -f ./enigma-blockchain*.deb
 	-rm -f ./SHA256SUMS*
 	-rm -rf ./third_party/vendor/
-	-rm -rf ./.sgx_secrets/*
-	-rm -rf ./x/compute/internal/keeper/.sgx_secrets/*
+	-rm -rf ./.sgx_ucpis/*
+	-rm -rf ./x/compute/internal/keeper/.sgx_ucpis/*
 	-rm -rf ./*.der
 	-rm -rf ./x/compute/internal/keeper/*.der
-	-rm -rf ./cmd/secretd/ias_bin*
+	-rm -rf ./cmd/ucpid/ias_bin*
 	$(MAKE) -C go-cosmwasm clean-all
 	$(MAKE) -C cosmwasm/enclaves/test clean
 
 build-rocksdb-image:
 	docker build --build-arg BUILD_VERSION=${VERSION} -f deployment/dockerfiles/db-compile.Dockerfile -t enigmampc/rocksdb:${VERSION} .
 
-build-localsecret:
+build-localucpi:
 	docker build --build-arg BUILD_VERSION=${VERSION} --build-arg SGX_MODE=SW --build-arg FEATURES_U="${FEATURES_U}" --build-arg FEATURES="${FEATURES},debug-print" -f deployment/dockerfiles/base.Dockerfile -t rust-go-base-image .
-	docker build --build-arg SGX_MODE=SW --build-arg SECRET_NODE_TYPE=BOOTSTRAP --build-arg CHAIN_ID=secretdev-1 -f deployment/dockerfiles/release.Dockerfile -t build-release .
-	docker build --build-arg SGX_MODE=SW --build-arg SECRET_NODE_TYPE=BOOTSTRAP --build-arg CHAIN_ID=secretdev-1 -f deployment/dockerfiles/dev-image.Dockerfile -t ghcr.io/scrtlabs/localsecret:${DOCKER_TAG} .
+	docker build --build-arg SGX_MODE=SW --build-arg ucpi_NODE_TYPE=BOOTSTRAP --build-arg CHAIN_ID=ucpidev-1 -f deployment/dockerfiles/release.Dockerfile -t build-release .
+	docker build --build-arg SGX_MODE=SW --build-arg ucpi_NODE_TYPE=BOOTSTRAP --build-arg CHAIN_ID=ucpidev-1 -f deployment/dockerfiles/dev-image.Dockerfile -t ghcr.io/ucpilabs/localucpi:${DOCKER_TAG} .
 
 build-custom-dev-image:
     # .dockerignore excludes .so files so we rename these so that the dockerfile can find them
 	cd go-cosmwasm/api && cp libgo_cosmwasm.so libgo_cosmwasm.so.x
 	cd cosmwasm/enclaves/execute && cp librust_cosmwasm_enclave.signed.so librust_cosmwasm_enclave.signed.so.x
-	docker build --build-arg SGX_MODE=SW --build-arg SECRET_NODE_TYPE=BOOTSTRAP -f deployment/dockerfiles/custom-node.Dockerfile -t enigmampc/secret-network-sw-dev-custom-bootstrap:${DOCKER_TAG} .
-	docker build --build-arg SGX_MODE=SW --build-arg SECRET_NODE_TYPE=NODE -f deployment/dockerfiles/custom-node.Dockerfile -t enigmampc/secret-network-sw-dev-custom-node:${DOCKER_TAG} .
+	docker build --build-arg SGX_MODE=SW --build-arg ucpi_NODE_TYPE=BOOTSTRAP -f deployment/dockerfiles/custom-node.Dockerfile -t enigmampc/ucpi-network-sw-dev-custom-bootstrap:${DOCKER_TAG} .
+	docker build --build-arg SGX_MODE=SW --build-arg ucpi_NODE_TYPE=NODE -f deployment/dockerfiles/custom-node.Dockerfile -t enigmampc/ucpi-network-sw-dev-custom-node:${DOCKER_TAG} .
     # delete the copies created above
 	rm go-cosmwasm/api/libgo_cosmwasm.so.x cosmwasm/enclaves/execute/librust_cosmwasm_enclave.signed.so.x
 
 build-testnet: docker_base
 	@mkdir build 2>&3 || true
-	docker build --build-arg BUILD_VERSION=${VERSION} --build-arg SGX_MODE=HW --build-arg SECRET_NODE_TYPE=BOOTSTRAP -f deployment/dockerfiles/release.Dockerfile -t enigmampc/secret-network-bootstrap:v$(VERSION)-testnet .
-	docker build --build-arg BUILD_VERSION=${VERSION} --build-arg SGX_MODE=HW --build-arg SECRET_NODE_TYPE=NODE -f deployment/dockerfiles/release.Dockerfile -t enigmampc/secret-network-node:v$(VERSION)-testnet .
+	docker build --build-arg BUILD_VERSION=${VERSION} --build-arg SGX_MODE=HW --build-arg ucpi_NODE_TYPE=BOOTSTRAP -f deployment/dockerfiles/release.Dockerfile -t enigmampc/ucpi-network-bootstrap:v$(VERSION)-testnet .
+	docker build --build-arg BUILD_VERSION=${VERSION} --build-arg SGX_MODE=HW --build-arg ucpi_NODE_TYPE=NODE -f deployment/dockerfiles/release.Dockerfile -t enigmampc/ucpi-network-node:v$(VERSION)-testnet .
 	docker build --build-arg SGX_MODE=HW -f deployment/dockerfiles/build-deb.Dockerfile -t deb_build .
 	docker run -e VERSION=${VERSION} -v $(CUR_DIR)/build:/build deb_build
 
@@ -245,12 +245,12 @@ build-mainnet-upgrade: docker_base
 	docker build --build-arg BUILD_VERSION=${VERSION} -f deployment/dockerfiles/mainnet-upgrade-release.Dockerfile -t build-release:latest .
 	docker build --build-arg BUILD_VERSION=${VERSION} --build-arg SGX_MODE=HW -f deployment/dockerfiles/build-deb-mainnet.Dockerfile -t deb_build .
 	docker run -e VERSION=${VERSION} -v $(CUR_DIR)/build:/build deb_build
-	docker tag build-release ghcr.io/scrtlabs/secret-network-node:$(VERSION)
+	docker tag build-release ghcr.io/ucpilabs/ucpi-network-node:$(VERSION)
 
 build-mainnet: docker_base
 	@mkdir build 2>&3 || true
-	docker build --build-arg SGX_MODE=HW --build-arg SECRET_NODE_TYPE=BOOTSTRAP -f deployment/dockerfiles/release.Dockerfile -t enigmampc/secret-network-bootstrap:v$(VERSION)-mainnet .
-	docker build --build-arg SGX_MODE=HW --build-arg SECRET_NODE_TYPE=NODE -f deployment/dockerfiles/release.Dockerfile -t enigmampc/secret-network-node:v$(VERSION)-mainnet .
+	docker build --build-arg SGX_MODE=HW --build-arg ucpi_NODE_TYPE=BOOTSTRAP -f deployment/dockerfiles/release.Dockerfile -t enigmampc/ucpi-network-bootstrap:v$(VERSION)-mainnet .
+	docker build --build-arg SGX_MODE=HW --build-arg ucpi_NODE_TYPE=NODE -f deployment/dockerfiles/release.Dockerfile -t enigmampc/ucpi-network-node:v$(VERSION)-mainnet .
 	docker build --build-arg BUILD_VERSION=${VERSION} --build-arg SGX_MODE=HW -f deployment/dockerfiles/build-deb.Dockerfile -t deb_build .
 	docker run -e VERSION=${VERSION} -v $(CUR_DIR)/build:/build deb_build
 
@@ -299,14 +299,14 @@ docker_base: docker_base_rust docker_base_go
 
 
 docker_bootstrap: docker_base
-	docker build --build-arg SGX_MODE=${SGX_MODE} --build-arg SECRET_NODE_TYPE=BOOTSTRAP -f deployment/dockerfiles/local-node.Dockerfile -t enigmampc/secret-network-bootstrap-${ext}:${DOCKER_TAG} .
+	docker build --build-arg SGX_MODE=${SGX_MODE} --build-arg ucpi_NODE_TYPE=BOOTSTRAP -f deployment/dockerfiles/local-node.Dockerfile -t enigmampc/ucpi-network-bootstrap-${ext}:${DOCKER_TAG} .
 
 docker_node: docker_base
-	docker build --build-arg SGX_MODE=${SGX_MODE} --build-arg SECRET_NODE_TYPE=NODE -f deployment/dockerfiles/local-node.Dockerfile -t enigmampc/secret-network-node-${ext}:${DOCKER_TAG} .
+	docker build --build-arg SGX_MODE=${SGX_MODE} --build-arg ucpi_NODE_TYPE=NODE -f deployment/dockerfiles/local-node.Dockerfile -t enigmampc/ucpi-network-node-${ext}:${DOCKER_TAG} .
 
 docker_local_azure_hw: docker_base
-	docker build --build-arg SGX_MODE=HW --build-arg SECRET_NODE_TYPE=NODE -f deployment/dockerfiles/local-node.Dockerfile -t ci-enigma-sgx-node .
-	docker build --build-arg SGX_MODE=HW --build-arg SECRET_NODE_TYPE=BOOTSTRAP -f deployment/dockerfiles/local-node.Dockerfile -t ci-enigma-sgx-bootstrap .
+	docker build --build-arg SGX_MODE=HW --build-arg ucpi_NODE_TYPE=NODE -f deployment/dockerfiles/local-node.Dockerfile -t ci-enigma-sgx-node .
+	docker build --build-arg SGX_MODE=HW --build-arg ucpi_NODE_TYPE=BOOTSTRAP -f deployment/dockerfiles/local-node.Dockerfile -t ci-enigma-sgx-bootstrap .
 
 docker_enclave_test:
 	docker build --build-arg FEATURES="test ${FEATURES}" --build-arg SGX_MODE=${SGX_MODE} -f deployment/dockerfiles/enclave-test.Dockerfile -t rust-enclave-test .
@@ -357,16 +357,16 @@ go-tests: build-test-contract
 	# empty BUILD_PROFILE means debug mode which compiles faster
 	SGX_MODE=SW $(MAKE) build-linux
 	cp ./cosmwasm/enclaves/execute/librust_cosmwasm_enclave.signed.so ./x/compute/internal/keeper
-	rm -rf ./x/compute/internal/keeper/.sgx_secrets
-	mkdir -p ./x/compute/internal/keeper/.sgx_secrets
-	GOMAXPROCS=8 SGX_MODE=SW SCRT_SGX_STORAGE='./' go test -failfast -timeout 1200s -v ./x/compute/internal/... $(GO_TEST_ARGS)
+	rm -rf ./x/compute/internal/keeper/.sgx_ucpis
+	mkdir -p ./x/compute/internal/keeper/.sgx_ucpis
+	GOMAXPROCS=8 SGX_MODE=SW ucpi_SGX_STORAGE='./' go test -failfast -timeout 1200s -v ./x/compute/internal/... $(GO_TEST_ARGS)
 
 go-tests-hw: build-test-contract
 	# empty BUILD_PROFILE means debug mode which compiles faster
 	SGX_MODE=HW $(MAKE) build-linux
 	cp ./cosmwasm/enclaves/execute/librust_cosmwasm_enclave.signed.so ./x/compute/internal/keeper
-	rm -rf ./x/compute/internal/keeper/.sgx_secrets
-	mkdir -p ./x/compute/internal/keeper/.sgx_secrets
+	rm -rf ./x/compute/internal/keeper/.sgx_ucpis
+	mkdir -p ./x/compute/internal/keeper/.sgx_ucpis
 	GOMAXPROCS=8 SGX_MODE=HW go test -v ./x/compute/internal/... $(GO_TEST_ARGS)
 
 # When running this more than once, after the first time you'll want to remove the contents of the `ffi-types`
@@ -412,19 +412,19 @@ build-erc20-contract: build-test-contract
 bin-data: bin-data-sw bin-data-develop bin-data-production
 
 bin-data-sw:
-	cd ./cmd/secretd && go-bindata -o ias_bin_sw.go -prefix "../../ias_keys/sw_dummy/" -tags "!hw" ../../ias_keys/sw_dummy/...
+	cd ./cmd/ucpid && go-bindata -o ias_bin_sw.go -prefix "../../ias_keys/sw_dummy/" -tags "!hw" ../../ias_keys/sw_dummy/...
 
 bin-data-develop:
-	cd ./cmd/secretd && go-bindata -o ias_bin_dev.go -prefix "../../ias_keys/develop/" -tags "develop,hw" ../../ias_keys/develop/...
+	cd ./cmd/ucpid && go-bindata -o ias_bin_dev.go -prefix "../../ias_keys/develop/" -tags "develop,hw" ../../ias_keys/develop/...
 
 bin-data-production:
-	cd ./cmd/secretd && go-bindata -o ias_bin_prod.go -prefix "../../ias_keys/production/" -tags "production,hw" ../../ias_keys/production/...
+	cd ./cmd/ucpid && go-bindata -o ias_bin_prod.go -prefix "../../ias_keys/production/" -tags "production,hw" ../../ias_keys/production/...
 
 # Before running this you might need to do:
 # 1. sudo docker login -u ABC -p XYZ
 # 2. sudo docker buildx create --use
-secret-contract-optimizer:
-	sudo docker buildx build --platform=linux/amd64,linux/arm64/v8 -f deployment/dockerfiles/secret-contract-optimizer.Dockerfile -t enigmampc/secret-contract-optimizer:${TAG} --push .
+ucpi-contract-optimizer:
+	sudo docker buildx build --platform=linux/amd64,linux/arm64/v8 -f deployment/dockerfiles/ucpi-contract-optimizer.Dockerfile -t enigmampc/ucpi-contract-optimizer:${TAG} --push .
 
 aesm-image:
 	docker build -f deployment/dockerfiles/aesm.Dockerfile -t enigmampc/aesm .

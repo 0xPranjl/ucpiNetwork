@@ -25,16 +25,16 @@ RUN mkdir -p ./go-cosmwasm/api/
 COPY Makefile .
 
 # Copy over binaries from the build-env
-COPY --from=build-env-rust-go /go/src/github.com/enigmampc/SecretNetwork/go-cosmwasm/target/release/libgo_cosmwasm.so ./go-cosmwasm/api/
-COPY --from=build-env-rust-go /go/src/github.com/enigmampc/SecretNetwork/go-cosmwasm/librust_cosmwasm_enclave.signed.so ./go-cosmwasm/
-COPY --from=build-env-rust-go /go/src/github.com/enigmampc/SecretNetwork/go-cosmwasm/librust_cosmwasm_query_enclave.signed.so ./go-cosmwasm/
-COPY --from=build-env-rust-go /go/src/github.com/enigmampc/SecretNetwork/secretd secretd
-COPY --from=build-env-rust-go /go/src/github.com/enigmampc/SecretNetwork/secretcli secretcli
+COPY --from=build-env-rust-go /go/src/github.com/enigmampc/ucpiNetwork/go-cosmwasm/target/release/libgo_cosmwasm.so ./go-cosmwasm/api/
+COPY --from=build-env-rust-go /go/src/github.com/enigmampc/ucpiNetwork/go-cosmwasm/librust_cosmwasm_enclave.signed.so ./go-cosmwasm/
+COPY --from=build-env-rust-go /go/src/github.com/enigmampc/ucpiNetwork/go-cosmwasm/librust_cosmwasm_query_enclave.signed.so ./go-cosmwasm/
+COPY --from=build-env-rust-go /go/src/github.com/enigmampc/ucpiNetwork/ucpid ucpid
+COPY --from=build-env-rust-go /go/src/github.com/enigmampc/ucpiNetwork/ucpicli ucpicli
 
 COPY ./deployment/deb ./deployment/deb
 COPY ./deployment/docker/builder/build_deb.sh .
 
 RUN chmod +x build_deb.sh
 
-# Run secretd by default, omit entrypoint to ease using container with secretcli
+# Run ucpid by default, omit entrypoint to ease using container with ucpicli
 CMD ["/bin/bash", "build_deb.sh"]

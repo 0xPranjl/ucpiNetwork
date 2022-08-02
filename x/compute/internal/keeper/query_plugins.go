@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"strings"
 
-	"github.com/enigmampc/SecretNetwork/x/compute/internal/types"
+	"github.com/enigmampc/ucpiNetwork/x/compute/internal/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
@@ -18,7 +18,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	distrtypes "github.com/cosmos/cosmos-sdk/x/distribution/types"
-	wasmTypes "github.com/enigmampc/SecretNetwork/go-cosmwasm/types"
+	wasmTypes "github.com/enigmampc/ucpiNetwork/go-cosmwasm/types"
 	abci "github.com/tendermint/tendermint/abci/types"
 )
 
@@ -209,7 +209,7 @@ func DistQuerier(keeper distrkeeper.Keeper) func(ctx sdk.Context, request *wasmT
 			for i, valRewards := range res.Rewards {
 				res.Rewards[i].Validator = valRewards.Validator
 				for j, valReward := range valRewards.Reward {
-					// this is here so we can remove fractions of uscrt from the result
+					// this is here so we can remove fractions of uucpi from the result
 					res.Rewards[i].Reward[j].Amount = strings.Split(valReward.Amount, ".")[0]
 					res.Rewards[i].Reward[j].Denom = valReward.Denom
 				}

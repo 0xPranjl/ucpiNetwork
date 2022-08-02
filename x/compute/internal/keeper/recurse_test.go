@@ -13,8 +13,8 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	wasmTypes "github.com/enigmampc/SecretNetwork/go-cosmwasm/types"
-	"github.com/enigmampc/SecretNetwork/x/compute/internal/types"
+	wasmTypes "github.com/enigmampc/ucpiNetwork/go-cosmwasm/types"
+	"github.com/enigmampc/ucpiNetwork/x/compute/internal/types"
 )
 
 type Recurse struct {
@@ -229,12 +229,12 @@ func TestGasOnExternalQuery(t *testing.T) {
 			recurse.Contract = contractAddr
 			msg := buildQuery(t, recurse, hex.EncodeToString(keeper.GetContractHash(ctx, contractAddr)))
 
-			secretMsg := types.SecretMsg{
+			ucpiMsg := types.ucpiMsg{
 				CodeHash: []byte(hex.EncodeToString(keeper.GetContractHash(ctx, contractAddr))),
 				Msg:      msg,
 			}
 
-			msg, err := wasmCtx.Encrypt(secretMsg.Serialize())
+			msg, err := wasmCtx.Encrypt(ucpiMsg.Serialize())
 			require.NoError(t, err)
 
 			// do the query

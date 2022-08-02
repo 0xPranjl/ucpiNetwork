@@ -17,7 +17,7 @@
 #![allow(trivial_casts)]
 #![allow(unused_imports)]
 #![allow(unused_results)]
-//! Generated file from `secret/compute/v1beta1/msg.proto`
+//! Generated file from `ucpi/compute/v1beta1/msg.proto`
 
 /// Generated files are compatible only with the same version
 /// of protobuf runtime.
@@ -1096,7 +1096,7 @@ impl ::protobuf::reflect::ProtobufValue for MsgExecuteContract {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x20secret/compute/v1beta1/msg.proto\x12\x16secret.compute.v1beta1\x1a\
+    \n\x20ucpi/compute/v1beta1/msg.proto\x12\x16ucpi.compute.v1beta1\x1a\
     \x14gogoproto/gogo.proto\x1a\x1ecosmos/base/v1beta1/coin.proto\"\xc9\x01\
     \n\x0cMsgStoreCode\x12I\n\x06sender\x18\x01\x20\x01(\x0cR\x06senderB1\
     \xfa\xde\x1f-github.com/cosmos/cosmos-sdk/types.AccAddress\x126\n\x0ewas\
@@ -1121,7 +1121,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x19.cosmos.base.v1beta1.CoinR\tsentFundsB0\xaa\xdf\x1f(github.com/cosmo\
     s/cosmos-sdk/types.Coins\xc8\xde\x1f\0\x122\n\x0ccallback_sig\x18\x06\
     \x20\x01(\x0cR\x0bcallbackSigB\x0f\xe2\xde\x1f\x0bCallbackSig:\x04\x88\
-    \xa0\x1f\0B=Z;github.com/enigmampc/SecretNetwork/x/compute/internal/type\
+    \xa0\x1f\0B=Z;github.com/enigmampc/ucpiNetwork/x/compute/internal/type\
     sb\x06proto3\
 ";
 

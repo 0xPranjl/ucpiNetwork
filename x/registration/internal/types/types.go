@@ -11,8 +11,8 @@ const (
 	EncryptedKeyLength     = 96 // encoded length
 	MasterNodeKeyId        = "NodeExchMasterKey"
 	MasterIoKeyId          = "IoExchMasterKey"
-	SecretNodeSeedConfig   = "seed.json"
-	SecretNodeCfgFolder    = ".node"
+	ucpiNodeSeedConfig   = "seed.json"
+	ucpiNodeCfgFolder    = ".node"
 )
 
 const (

@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/cosmos/cosmos-sdk/simapp"
-	"github.com/enigmampc/SecretNetwork/x/compute"
+	"github.com/enigmampc/ucpiNetwork/x/compute"
 
 	"github.com/stretchr/testify/suite"
 	"github.com/tendermint/tendermint/crypto"
@@ -17,7 +17,7 @@ import (
 	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
 	ibctesting "github.com/cosmos/ibc-go/v3/testing"
 
-	icaapp "github.com/enigmampc/SecretNetwork/app"
+	icaapp "github.com/enigmampc/ucpiNetwork/app"
 )
 
 var (
@@ -43,7 +43,7 @@ func init() {
 func SetupICATestingApp() (ibctesting.TestingApp, map[string]json.RawMessage) {
 	db := dbm.NewMemDB()
 	// encCdc := icaapp.MakeEncodingConfig()
-	app := icaapp.NewSecretNetworkApp(log.NewNopLogger(), db, nil, true, map[int64]bool{}, icaapp.DefaultNodeHome, 5, false, simapp.EmptyAppOptions{}, compute.DefaultWasmConfig())
+	app := icaapp.NewucpiNetworkApp(log.NewNopLogger(), db, nil, true, map[int64]bool{}, icaapp.DefaultNodeHome, 5, false, simapp.EmptyAppOptions{}, compute.DefaultWasmConfig())
 	// TODO: figure out if it's ok that w MakeEncodingConfig inside of our Genesis.go. It would be a different instance than the one used in app
 	return app, icaapp.NewDefaultGenesisState()
 }
@@ -59,8 +59,8 @@ type KeeperTestSuite struct {
 	chainB *ibctesting.TestChain
 }
 
-func (suite *KeeperTestSuite) GetICAApp(chain *ibctesting.TestChain) *icaapp.SecretNetworkApp {
-	app, ok := chain.App.(*icaapp.SecretNetworkApp)
+func (suite *KeeperTestSuite) GetICAApp(chain *ibctesting.TestChain) *icaapp.ucpiNetworkApp {
+	app, ok := chain.App.(*icaapp.ucpiNetworkApp)
 	if !ok {
 		panic("not ica app")
 	}

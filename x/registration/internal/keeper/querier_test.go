@@ -9,8 +9,8 @@ import (
 	"testing"
 
 	sdkErrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"github.com/enigmampc/SecretNetwork/x/registration/internal/types"
-	ra "github.com/enigmampc/SecretNetwork/x/registration/remote_attestation"
+	"github.com/enigmampc/ucpiNetwork/x/registration/internal/types"
+	ra "github.com/enigmampc/ucpiNetwork/x/registration/remote_attestation"
 
 	"github.com/stretchr/testify/require"
 	abci "github.com/tendermint/tendermint/abci/types"
@@ -41,7 +41,7 @@ func TestNewQuerier(t *testing.T) {
 		return
 	}
 
-	expectedSecretParams, _ := json.Marshal(types.GenesisState{
+	expecteducpiParams, _ := json.Marshal(types.GenesisState{
 		Registration:              nil,
 		NodeExchMasterCertificate: &types.MasterCertificate{Bytes: regInfo.Certificate},
 		IoMasterCertificate:       &types.MasterCertificate{Bytes: regInfo.Certificate},
@@ -97,5 +97,5 @@ func TestNewQuerier(t *testing.T) {
 	keeper.setMasterCertificate(ctx, types.MasterCertificate{Bytes: regInfo.Certificate}, types.MasterIoKeyId)
 
 	binResult, err := querier(ctx, []string{QueryMasterCertificate}, abci.RequestQuery{Data: []byte("")})
-	require.Equal(t, string(binResult), string(expectedSecretParams))
+	require.Equal(t, string(binResult), string(expecteducpiParams))
 }

@@ -175,7 +175,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "secret-cosmwasm-std"
+name = "ucpi-cosmwasm-std"
 version = "0.10.1"
 dependencies = [
  "base64",
@@ -186,10 +186,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "secret-cosmwasm-storage"
+name = "ucpi-cosmwasm-storage"
 version = "0.10.0"
 dependencies = [
- "secret-cosmwasm-std",
+ "ucpi-cosmwasm-std",
  "serde",
 ]
 
@@ -283,8 +283,8 @@ version = "0.0.1"
 dependencies = [
  "schemars",
  "secp256k1",
- "secret-cosmwasm-std",
- "secret-cosmwasm-storage",
+ "ucpi-cosmwasm-std",
+ "ucpi-cosmwasm-storage",
  "serde",
  "serde-json-wasm",
 ]

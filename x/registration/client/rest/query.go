@@ -9,10 +9,10 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/types/rest"
-	ra "github.com/enigmampc/SecretNetwork/x/registration/remote_attestation"
+	ra "github.com/enigmampc/ucpiNetwork/x/registration/remote_attestation"
 
-	"github.com/enigmampc/SecretNetwork/x/registration/internal/keeper"
-	"github.com/enigmampc/SecretNetwork/x/registration/internal/types"
+	"github.com/enigmampc/ucpiNetwork/x/registration/internal/keeper"
+	"github.com/enigmampc/ucpiNetwork/x/registration/internal/types"
 
 	"github.com/gorilla/mux"
 )

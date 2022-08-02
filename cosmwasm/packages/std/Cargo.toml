@@ -1,10 +1,10 @@
 [package]
-name = "secret-cosmwasm-std"
+name = "ucpi-cosmwasm-std"
 version = "0.10.1"
-authors = ["Ethan Frey <ethanfrey@users.noreply.github.com>", "SCRT Labs <info@scrtlabs.com>"]
+authors = ["Ethan Frey <ethanfrey@users.noreply.github.com>", "ucpi Labs <info@ucpilabs.com>"]
 edition = "2018"
 description = "Standard library for Wasm based smart contracts on Cosmos blockchains"
-repository = "https://github.com/scrtlabs/SecretNetwork/tree/master/cosmwasm/packages/std"
+repository = "https://github.com/ucpilabs/ucpiNetwork/tree/master/cosmwasm/packages/std"
 license = "Apache-2.0"
 readme = "README.md"
 
@@ -29,7 +29,7 @@ backtraces = ["snafu/backtraces"]
 # Debug prints enable printing log messages to the logging system of the enclave
 # from inside your contract. This will only work in enclaves compiled in SW mode
 # and loading the contract for execution will fail if this is used a HW mode
-# enclave. This is done in order to provent leaking secrets in production.
+# enclave. This is done in order to provent leaking ucpis in production.
 debug-print = []
 
 [dependencies]

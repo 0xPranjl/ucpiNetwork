@@ -4,7 +4,7 @@ import (
 	"io/ioutil"
 	"testing"
 
-	"github.com/enigmampc/SecretNetwork/x/registration/internal/types"
+	"github.com/enigmampc/ucpiNetwork/x/registration/internal/types"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

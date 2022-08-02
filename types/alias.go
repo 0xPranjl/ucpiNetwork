@@ -1,7 +1,7 @@
 package types
 
 import (
-	"github.com/enigmampc/SecretNetwork/types/util"
+	"github.com/enigmampc/ucpiNetwork/types/util"
 )
 
 // Aliases for internal types

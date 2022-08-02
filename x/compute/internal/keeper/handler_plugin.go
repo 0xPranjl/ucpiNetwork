@@ -11,8 +11,8 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	wasmTypes "github.com/enigmampc/SecretNetwork/go-cosmwasm/types"
-	"github.com/enigmampc/SecretNetwork/x/compute/internal/types"
+	wasmTypes "github.com/enigmampc/ucpiNetwork/go-cosmwasm/types"
+	"github.com/enigmampc/ucpiNetwork/x/compute/internal/types"
 )
 
 type MessageHandler struct {

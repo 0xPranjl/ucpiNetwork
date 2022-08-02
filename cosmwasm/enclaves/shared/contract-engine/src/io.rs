@@ -13,7 +13,7 @@ use enclave_cosmwasm_types::encoding::Binary;
 use enclave_cosmwasm_types::types::{CanonicalAddr, Coin, CosmosMsg, WasmMsg, WasmOutput};
 use enclave_crypto::{AESKey, Ed25519PublicKey, Kdf, SIVEncryptable, KEY_MANAGER};
 
-use super::types::{IoNonce, SecretMessage};
+use super::types::{IoNonce, ucpiMessage};
 
 pub fn calc_encryption_key(nonce: &IoNonce, user_public_key: &Ed25519PublicKey) -> AESKey {
     let enclave_io_key = KEY_MANAGER.get_consensus_io_exchange_keypair().unwrap();
@@ -155,7 +155,7 @@ fn encrypt_wasm_msg(
             let mut hash_appended_msg = callback_code_hash.as_bytes().to_vec();
             hash_appended_msg.extend_from_slice(msg.as_slice());
 
-            let mut msg_to_pass = SecretMessage::from_base64(
+            let mut msg_to_pass = ucpiMessage::from_base64(
                 Binary(hash_appended_msg).to_base64(),
                 nonce,
                 user_public_key,
@@ -173,12 +173,12 @@ fn encrypt_wasm_msg(
 
 pub fn create_callback_signature(
     contract_addr: &CanonicalAddr,
-    msg_to_sign: &SecretMessage,
+    msg_to_sign: &ucpiMessage,
     funds_to_send: &[Coin],
 ) -> Vec<u8> {
-    // Hash(Enclave_secret | sender(current contract) | msg_to_pass | sent_funds)
+    // Hash(Enclave_ucpi | sender(current contract) | msg_to_pass | sent_funds)
     let mut callback_sig_bytes = KEY_MANAGER
-        .get_consensus_callback_secret()
+        .get_consensus_callback_ucpi()
         .unwrap()
         .get()
         .to_vec();

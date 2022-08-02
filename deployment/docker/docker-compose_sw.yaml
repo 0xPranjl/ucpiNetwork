@@ -2,11 +2,11 @@ version: '3'
 
 services:
   bootstrap:
-    image: enigmampc/secret-network-bootstrap-sw:latest
+    image: enigmampc/ucpi-network-bootstrap-sw:latest
     container_name: bootstrap
     volumes:
-      - /tmp/secretd:/root/.secretd
-      - /tmp/secretcli:/root/.secretcli
+      - /tmp/ucpid:/root/.ucpid
+      - /tmp/ucpicli:/root/.ucpicli
     stdin_open: true
     tty: true
     environment:
@@ -17,12 +17,12 @@ services:
       - 26657
 
   node:
-    image: enigmampc/secret-network-node-sw
+    image: enigmampc/ucpi-network-node-sw
     depends_on:
       - bootstrap
     volumes:
-      - /tmp/secretd:/tmp/.secretd
-      - /tmp/secretcli:/root/.secretcli
+      - /tmp/ucpid:/tmp/.ucpid
+      - /tmp/ucpicli:/root/.ucpicli
     stdin_open: true
     tty: true
     environment:

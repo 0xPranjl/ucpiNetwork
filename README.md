@@ -1,16 +1,16 @@
-![Secret Network](sn-logo.png)
+![ucpi Network](sn-logo.png)
 
 <div align="center">
   
-[![version](https://img.shields.io/badge/version-1.3.1-blue)](https://github.com/scrtlabs/SecretNetwork/releases/tag/v1.3.1)
+[![version](https://img.shields.io/badge/version-1.3.1-blue)](https://github.com/ucpilabs/ucpiNetwork/releases/tag/v1.3.1)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md)
-<a href="https://twitter.com/intent/follow?screen_name=SecretNetwork">
-<img src="https://img.shields.io/twitter/follow/SecretNetwork?style=social&logo=twitter"
+<a href="https://twitter.com/intent/follow?screen_name=ucpiNetwork">
+<img src="https://img.shields.io/twitter/follow/ucpiNetwork?style=social&logo=twitter"
 alt="Follow"></a>
 
  </div>
 
-Secret Network offers scalable permissionless smart contracts with a private by default design— bringing novel use cases to blockchain not feasible on public systems. Secret Network enables users to take back ownership over their private (financial) information and for them to share this information with whom they trust. Secret Network was the first protocol to provide private smart contracts on mainnet, live since September 2020. Secret Network is Built with the Cosmos Software Development Kit (SDK) bringing Interoperable privacy to the entire Cosmos ecosystem. Secret Network uses a combination of the Intel SGX (Software Guard Extension) Trusted Execution Environment technology, several encryption schemes and key management to bring privacy by default to blockchain users. Secret Contracts are an implementation of the Rust based smart contract compiling toolkit CosmWasm, adding private metadata possibilities. Secret Network is powered by the Native public coin SCRT which is used for fees, Proof Of Stake security and Governance. With more than 20+ Dapps, 100+ full time builders and a strong grassroots community Secret Network aims to bring privacy to the masses.
+ucpi Network offers scalable permissionless smart contracts with a private by default design— bringing novel use cases to blockchain not feasible on public systems. ucpi Network enables users to take back ownership over their private (financial) information and for them to share this information with whom they trust. ucpi Network was the first protocol to provide private smart contracts on mainnet, live since September 2020. ucpi Network is Built with the Cosmos Software Development Kit (SDK) bringing Interoperable privacy to the entire Cosmos ecosystem. ucpi Network uses a combination of the Intel SGX (Software Guard Extension) Trusted Execution Environment technology, several encryption schemes and key management to bring privacy by default to blockchain users. ucpi Contracts are an implementation of the Rust based smart contract compiling toolkit CosmWasm, adding private metadata possibilities. ucpi Network is powered by the Native public coin ucpi which is used for fees, Proof Of Stake security and Governance. With more than 20+ Dapps, 100+ full time builders and a strong grassroots community ucpi Network aims to bring privacy to the masses.
 
 
 # Setting up Environment
@@ -21,7 +21,7 @@ Secret Network offers scalable permissionless smart contracts with a private by 
 
 Click the button below to start a new development environment:
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/scrtlabs/SecretNetwork)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/ucpilabs/ucpiNetwork)
 
 ### VSCode Docker Environment
 
@@ -31,7 +31,7 @@ Click the button below to start a new development environment:
 
 ### Docker Dev Environments
 
-1. From Docker Desktop, create a new Dev Environment from the prebuilt image - `ghcr.io/scrtlabs/secretnetwork-dev:latest`
+1. From Docker Desktop, create a new Dev Environment from the prebuilt image - `ghcr.io/ucpilabs/ucpinetwork-dev:latest`
 2. Connect with VSCode, or use the container directly
 3. Make sure the code is updated by using `get fetch` and `git pull`
 
@@ -88,19 +88,19 @@ Run `./scripts/start-node.sh`
 
 # Documentation
 
-For the latest documentation, check out [https://docs.scrt.network](https://docs.scrt.network)
+For the latest documentation, check out [https://docs.ucpi.network](https://docs.ucpi.network)
 
 # Community
 
-- Homepage: [https://scrt.network](https://scrt.network)
-- Blog: [https://blog.scrt.network](https://blog.scrt.network)
-- Forum: [https://forum.scrt.network](https://forum.scrt.network)
-- Docs: [https://docs.scrt.network](https://docs.scrt.network)
-- Discord: [https://chat.scrt.network](https://chat.scrt.network)
-- Twitter: [https://twitter.com/SecretNetwork](https://twitter.com/SecretNetwork)
-- Community Telegram Channel: [https://t.me/SCRTnetwork](https://t.me/SCRTnetwork)
-- Community Secret Nodes Telegram: [https://t.me/secretnodes](https://t.me/secretnodes)
+- Homepage: [https://ucpi.network](https://ucpi.network)
+- Blog: [https://blog.ucpi.network](https://blog.ucpi.network)
+- Forum: [https://forum.ucpi.network](https://forum.ucpi.network)
+- Docs: [https://docs.ucpi.network](https://docs.ucpi.network)
+- Discord: [https://chat.ucpi.network](https://chat.ucpi.network)
+- Twitter: [https://twitter.com/ucpiNetwork](https://twitter.com/ucpiNetwork)
+- Community Telegram Channel: [https://t.me/ucpinetwork](https://t.me/ucpinetwork)
+- Community ucpi Nodes Telegram: [https://t.me/ucpinodes](https://t.me/ucpinodes)
 
 # License
 
-SecretNetwork is free software: you can redistribute it and/or modify it under the terms of the [GNU Affero General Public License](LICENSE) as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. The GNU Affero General Public License is based on the GNU GPL, but has an additional term to allow users who interact with the licensed software over a network to receive the source for that program.
+ucpiNetwork is free software: you can redistribute it and/or modify it under the terms of the [GNU Affero General Public License](LICENSE) as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. The GNU Affero General Public License is based on the GNU GPL, but has an additional term to allow users who interact with the licensed software over a network to receive the source for that program.

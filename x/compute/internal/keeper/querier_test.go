@@ -16,7 +16,7 @@ import (
 	sdkErrors "github.com/cosmos/cosmos-sdk/types/errors"
 	authante "github.com/cosmos/cosmos-sdk/x/auth/ante"
 
-	"github.com/enigmampc/SecretNetwork/x/compute/internal/types"
+	"github.com/enigmampc/ucpiNetwork/x/compute/internal/types"
 )
 
 func TestQueryContractLabel(t *testing.T) {
@@ -45,7 +45,7 @@ func TestQueryContractLabel(t *testing.T) {
 
 	hash := keeper.GetCodeInfo(ctx, contractID).CodeHash
 
-	msg := types.SecretMsg{
+	msg := types.ucpiMsg{
 		CodeHash: []byte(hex.EncodeToString(hash)),
 		Msg:      initMsgBz,
 	}
@@ -142,7 +142,7 @@ func TestQueryContractState(t *testing.T) {
 	key := keeper.GetCodeInfo(ctx, contractID).CodeHash
 	keyStr := hex.EncodeToString(key)
 
-	msg := types.SecretMsg{
+	msg := types.ucpiMsg{
 		CodeHash: []byte(keyStr),
 		Msg:      initMsgBz,
 	}
@@ -278,7 +278,7 @@ func TestListContractByCodeOrdering(t *testing.T) {
 	key := keeper.GetCodeInfo(ctx, codeID).CodeHash
 	keyStr := hex.EncodeToString(key)
 
-	msg := types.SecretMsg{
+	msg := types.ucpiMsg{
 		CodeHash: []byte(keyStr),
 		Msg:      initMsgBz,
 	}

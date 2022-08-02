@@ -41,12 +41,12 @@ sudo curl -L https://github.com/docker/compose/releases/download/1.26.0/docker-c
 
 sudo chmod +x /usr/local/bin/docker-compose
 
-echo "Creating secret node runner" >> /home/"$1"/install.progress.txt
+echo "Creating ucpi node runner" >> /home/"$1"/install.progress.txt
 
-mkdir -p /usr/local/bin/secret-node
+mkdir -p /usr/local/bin/ucpi-node
 
 echo "Copying docker compose file from $7" >> /home/"$1"/install.progress.txt
-sudo curl -L "$7" -o /usr/local/bin/secret-node/docker-compose.yaml
+sudo curl -L "$7" -o /usr/local/bin/ucpi-node/docker-compose.yaml
 
 mainnetstr="mainnet"
 if test "${6#*$mainnetstr}" != "$6"
@@ -59,17 +59,17 @@ fi
 
 
 # replace the tmp paths with home directory ones
-sudo sed -i 's/\/tmp\/.secretd:/\/home\/'$1'\/.secretd:/g' /usr/local/bin/secret-node/docker-compose.yaml
-sudo sed -i 's/\/tmp\/.secretcli:/\/home\/'$1'\/.secretcli:/g' /usr/local/bin/secret-node/docker-compose.yaml
-sudo sed -i 's/\/tmp\/.sgx_secrets:/\/home\/'$1'\/.sgx_secrets:/g' /usr/local/bin/secret-node/docker-compose.yaml
+sudo sed -i 's/\/tmp\/.ucpid:/\/home\/'$1'\/.ucpid:/g' /usr/local/bin/ucpi-node/docker-compose.yaml
+sudo sed -i 's/\/tmp\/.ucpicli:/\/home\/'$1'\/.ucpicli:/g' /usr/local/bin/ucpi-node/docker-compose.yaml
+sudo sed -i 's/\/tmp\/.sgx_ucpis:/\/home\/'$1'\/.sgx_ucpis:/g' /usr/local/bin/ucpi-node/docker-compose.yaml
 
 # Open RPC port to the public
-perl -i -pe 's/laddr = .+?26657"/laddr = "tcp:\/\/0.0.0.0:26657"/' ~/.secretd/config/config.toml
+perl -i -pe 's/laddr = .+?26657"/laddr = "tcp:\/\/0.0.0.0:26657"/' ~/.ucpid/config/config.toml
 
 # Open P2P port to the outside
-perl -i -pe 's/laddr = .+?26656"/laddr = "tcp:\/\/0.0.0.0:26656"/' ~/.secretd/config/config.toml
+perl -i -pe 's/laddr = .+?26656"/laddr = "tcp:\/\/0.0.0.0:26656"/' ~/.ucpid/config/config.toml
 
-echo "Setting Secret Node environment variables and aliases" >> /home/"$1"/install.progress.txt
+echo "Setting ucpi Node environment variables and aliases" >> /home/"$1"/install.progress.txt
 
 export CHAINID=$2
 export MONIKER=$3
@@ -79,12 +79,12 @@ export REGISTRATION_SERVICE=$6
 
 # set Aliases and environment variables
 {
-  echo 'alias secretcli="docker exec -it secret-node_node_1 secretcli"'
-  echo 'alias secretd="docker exec -it secret-node_node_1 secretd"'
-  echo 'alias show-node-id="docker exec -it secret-node_node_1 secretd tendermint show-node-id"'
-  echo 'alias show-validator="docker exec -it secret-node_node_1 secretd tendermint show-validator"'
-  echo 'alias stop-secret-node="docker-compose -f /usr/local/bin/secret-node/docker-compose.yaml down"'
-  echo 'alias start-secret-node="docker-compose -f /usr/local/bin/secret-node/docker-compose.yaml up -d"'
+  echo 'alias ucpicli="docker exec -it ucpi-node_node_1 ucpicli"'
+  echo 'alias ucpid="docker exec -it ucpi-node_node_1 ucpid"'
+  echo 'alias show-node-id="docker exec -it ucpi-node_node_1 ucpid tendermint show-node-id"'
+  echo 'alias show-validator="docker exec -it ucpi-node_node_1 ucpid tendermint show-validator"'
+  echo 'alias stop-ucpi-node="docker-compose -f /usr/local/bin/ucpi-node/docker-compose.yaml down"'
+  echo 'alias start-ucpi-node="docker-compose -f /usr/local/bin/ucpi-node/docker-compose.yaml up -d"'
   echo "export CHAINID=$2"
   echo "export MONIKER=$3"
   echo "export PERSISTENT_PEERS=$4"
@@ -104,7 +104,7 @@ export REGISTRATION_SERVICE=$6
 ################################################################
 # Configure to auto start at boot					    #
 ################################################################
-file=/etc/init.d/secret-node
+file=/etc/init.d/ucpi-node
 if [ ! -e "$file" ]
 then
   {
@@ -112,13 +112,13 @@ then
     printf '\n'
     # shellcheck disable=SC2016
     printf '### BEGIN INIT INFO
-# Provides:       secret-node
+# Provides:       ucpi-node
 # Required-Start:    $all
 # Required-Stop:     $local_fs $network $syslog $named $docker
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: starts secret node
-# Description:       starts secret node running in docker
+# Short-Description: starts ucpi node
+# Description:       starts ucpi node running in docker
 ### END INIT INFO\n\n'
     printf 'mkdir -p -m 777 /tmp/aesmd\n'
     printf 'chmod -R -f 777 /tmp/aesmd || sudo chmod -R -f 777 /tmp/aesmd || true\n'
@@ -128,22 +128,22 @@ then
     echo "export PRSISTENT_PEERS=$4"
     echo "export RPC_URL=$5"
     echo "export REGISTRATION_SERVICE=$6"
-    printf 'docker-compose -f /usr/local/bin/secret-node/docker-compose.yaml up -d\n'
-  } | sudo tee /etc/init.d/secret-node
+    printf 'docker-compose -f /usr/local/bin/ucpi-node/docker-compose.yaml up -d\n'
+  } | sudo tee /etc/init.d/ucpi-node
 
-	sudo chmod +x /etc/init.d/secret-node
-	sudo update-rc.d secret-node defaults
+	sudo chmod +x /etc/init.d/ucpi-node
+	sudo update-rc.d ucpi-node defaults
 fi
 
-docker-compose -f /usr/local/bin/secret-node/docker-compose.yaml up -d
+docker-compose -f /usr/local/bin/ucpi-node/docker-compose.yaml up -d
 
-secretcli completion > /root/secretcli_completion
-secretd completion > /root/secretd_completion
+ucpicli completion > /root/ucpicli_completion
+ucpid completion > /root/ucpid_completion
 
-docker cp secret-node_node_1:/root/secretcli_completion /home/"$1"/secretcli_completion
-docker cp secret-node_node_1:/root/secretd_completion /home/"$1"/secretd_completion
+docker cp ucpi-node_node_1:/root/ucpicli_completion /home/"$1"/ucpicli_completion
+docker cp ucpi-node_node_1:/root/ucpid_completion /home/"$1"/ucpid_completion
 
-echo 'source /home/'$1'/secretd_completion' >> /home/"$1"/.bashrc
-echo 'source /home/'$1'/secretcli_completion' >> /home/"$1"/.bashrc
+echo 'source /home/'$1'/ucpid_completion' >> /home/"$1"/.bashrc
+echo 'source /home/'$1'/ucpicli_completion' >> /home/"$1"/.bashrc
 
-echo "Secret Node has been setup successfully and is running..." >> /home/"$1"/install.progress.txt
+echo "ucpi Node has been setup successfully and is running..." >> /home/"$1"/install.progress.txt

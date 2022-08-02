@@ -24,13 +24,13 @@ RUN curl -sL https://deb.nodesource.com/setup_15.x | bash - && \
     apt-get install -y nodejs npm && \
     npm i -g local-cors-proxy
 
-RUN wget -O /root/genesis.json https://github.com/scrtlabs/SecretNetwork/releases/download/v1.2.0/genesis.json
+RUN wget -O /root/genesis.json https://github.com/ucpilabs/ucpiNetwork/releases/download/v1.2.0/genesis.json
 
 ARG BUILD_VERSION="v0.0.0"
 ENV VERSION=${BUILD_VERSION}
 
 ENV SGX_MODE=HW
-ENV SCRT_ENCLAVE_DIR=/usr/lib/
+ENV ucpi_ENCLAVE_DIR=/usr/lib/
 
 
 # workaround because paths seem kind of messed up
@@ -45,23 +45,23 @@ RUN STORAGE_PATH=`echo ${VERSION} | sed -e 's/\.//g' | head -c 2` \
 
 # Copy over binaries from the build-env
 
-COPY --from=build-env-rust-go /go/src/github.com/enigmampc/SecretNetwork/go-cosmwasm/target/release/libgo_cosmwasm.so /usr/lib/
-# COPY --from=build-env-rust-go /go/src/github.com/enigmampc/SecretNetwork/go-cosmwasm/librust_cosmwasm_query_enclave.signed.so /usr/lib/
-COPY --from=build-env-rust-go /go/src/github.com/enigmampc/SecretNetwork/secretd /usr/bin/secretd
-COPY --from=build-env-rust-go /go/src/github.com/enigmampc/SecretNetwork/secretcli /usr/bin/secretcli
+COPY --from=build-env-rust-go /go/src/github.com/enigmampc/ucpiNetwork/go-cosmwasm/target/release/libgo_cosmwasm.so /usr/lib/
+# COPY --from=build-env-rust-go /go/src/github.com/enigmampc/ucpiNetwork/go-cosmwasm/librust_cosmwasm_query_enclave.signed.so /usr/lib/
+COPY --from=build-env-rust-go /go/src/github.com/enigmampc/ucpiNetwork/ucpid /usr/bin/ucpid
+COPY --from=build-env-rust-go /go/src/github.com/enigmampc/ucpiNetwork/ucpicli /usr/bin/ucpicli
 
 COPY deployment/docker/node/mainnet_node.sh .
 
-RUN chmod +x /usr/bin/secretd
+RUN chmod +x /usr/bin/ucpid
 RUN chmod +x mainnet_node.sh
 
-RUN secretd completion > /root/secretd_completion
+RUN ucpid completion > /root/ucpid_completion
 
-RUN echo 'source /root/secretd_completion' >> ~/.bashrc
+RUN echo 'source /root/ucpid_completion' >> ~/.bashrc
 
-RUN mkdir -p /root/.secretd/.compute/
-RUN mkdir -p /opt/secret/.sgx_secrets/
-RUN mkdir -p /root/.secretd/.node/
+RUN mkdir -p /root/.ucpid/.compute/
+RUN mkdir -p /opt/ucpi/.sgx_ucpis/
+RUN mkdir -p /root/.ucpid/.node/
 RUN mkdir -p /root/config/
 
 
@@ -70,5 +70,5 @@ RUN mkdir -p /root/config/
 
 #ENV LD_LIBRARY_PATH=/opt/sgxsdk/libsgx-enclave-common/:/opt/sgxsdk/lib64/
 
-# Run secretd by default, omit entrypoint to ease using container with secretcli
+# Run ucpid by default, omit entrypoint to ease using container with ucpicli
 ENTRYPOINT ["/bin/bash", "mainnet_node.sh"]

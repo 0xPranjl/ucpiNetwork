@@ -1,11 +1,11 @@
-Package: secretnetwork
+Package: ucpinetwork
 Priority: optional
 Architecture: amd64
-Homepage: https://github.com/scrtlabs/SecretNetwork
-Maintainer: https://github.com/scrtlabs
-Provides: secretnetwork
-Conflicts: secretnetwork
-Replaces: secretnetwork
+Homepage: https://github.com/ucpilabs/ucpiNetwork
+Maintainer: https://github.com/ucpilabs
+Provides: ucpinetwork
+Conflicts: ucpinetwork
+Replaces: ucpinetwork
 Depends: libsnappy1v5
 Description: More Privacy. Limitless Possibilities.
- Secret Network is the first blockchain with customizable privacy. You get to choose what you share, with whom, and how. This protects users, and empowers developers to build a better Web3. Visit
+ ucpi Network is the first blockchain with customizable privacy. You get to choose what you share, with whom, and how. This protects users, and empowers developers to build a better Web3. Visit

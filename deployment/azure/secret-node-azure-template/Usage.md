@@ -7,7 +7,7 @@
 
 ## General info
 
-This folder contains templates which are used to create an Azure marketplace offering of a 1-click secret node.
+This folder contains templates which are used to create an Azure marketplace offering of a 1-click ucpi node.
 Possibly in the future we will add more complex architectures, but at the moment it is just a single node. 
 
 To make things 1-clicky and simple the node setup and registration is performed automatically, with all you need to do is configure the parameters of your node.
@@ -25,13 +25,13 @@ Using Azure CLI login to enigmampc using
 
 `az login`
 
-Then, create a resource group for the new secret node
+Then, create a resource group for the new ucpi node
 
 `az group create --name <resource-group-name> --location "UK South"` 
 
 Note: Only UK south, East US and Central Canada are available for SGX machines
 
-Finally, deploy the secret node using:
+Finally, deploy the ucpi node using:
 `az deployment group create --resource-group <resource-group-name> --template-file azuredeploy.json`
 
 (or `az group deployment create --resource-group <resource-group-name> --template-file azuredeploy.json` on newer az cli versions)
@@ -57,13 +57,13 @@ The actual node runs in a docker image on the machine that is created. However, 
 
 ### Commands
 
-`secretd`, `secretcli` - will work as you would normally expect
+`ucpid`, `ucpicli` - will work as you would normally expect
 
 `show-node-id` - will print out the p2p address of the node
 `show-validator` - will print out the validator consensus public key, which is used when creating a validator
 
-`stop-secret-node` - will stop the node
-`start-secret-node` - will start the node
+`stop-ucpi-node` - will stop the node
+`start-ucpi-node` - will start the node
 
 ### Debugging
 
@@ -73,15 +73,15 @@ After creating the machine a healthy status of the node will have 2 containers a
 
 ```
 CONTAINER ID        IMAGE                                      COMMAND                  CREATED             STATUS                    PORTS                                  NAMES
-bf9ba8dd0802        enigmampc/secret-network-node:pubtestnet   "/bin/bash startup.sh"   13 minutes ago      Up 13 minutes (healthy)   0.0.0.0:26656-26657->26656-26657/tcp   secret-node_node_1
-2405b23aa1bd        enigmampc/aesm                             "/bin/sh -c './aesm_…"   13 minutes ago      Up 13 minutes                                                    secret-node_aesm_1
+bf9ba8dd0802        enigmampc/ucpi-network-node:pubtestnet   "/bin/bash startup.sh"   13 minutes ago      Up 13 minutes (healthy)   0.0.0.0:26656-26657->26656-26657/tcp   ucpi-node_node_1
+2405b23aa1bd        enigmampc/aesm                             "/bin/sh -c './aesm_…"   13 minutes ago      Up 13 minutes                                                    ucpi-node_aesm_1
 ```
 
 You can see the logs of the node by checking the docker logs of the node container:
 
-```docker logs secret-node_node_1```
+```docker logs ucpi-node_node_1```
 
 If you want to debug/do other stuff with your node you can exec into the actual node using
 
-```docker exec -it secret-node_node_1 /bin/bash```
+```docker exec -it ucpi-node_node_1 /bin/bash```
 

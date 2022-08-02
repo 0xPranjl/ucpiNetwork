@@ -45,8 +45,8 @@ impl ContractOperation {
     }
 }
 
-/// SecretContract maps function index to implementation
-/// When instantiating a module we give it the SecretNetworkImportResolver resolver
+/// ucpiContract maps function index to implementation
+/// When instantiating a module we give it the ucpiNetworkImportResolver resolver
 /// When invoking a function inside the module we give it this runtime which is the actual functions implementation ()
 pub struct ContractInstance {
     pub context: Ctx,
@@ -1139,7 +1139,7 @@ impl WasmiApi for ContractInstance {
         // up until now in this WASM call. This will be deterministic, but also kinda-random in
         // different situations. Note that the gas includes every WASM opcode and
         // every WASM memory allocation up until now.
-        // Secret data from the enclave can also be used here but I'm not sure if that's necessary.
+        // ucpi data from the enclave can also be used here but I'm not sure if that's necessary.
         // A few more notes:
         // 1. The vanilla CosmWasm v1 implementation is using RNG from the OS,
         // meaning that different values are used in differents nodes for the same operation inside
@@ -1230,12 +1230,12 @@ impl WasmiApi for ContractInstance {
             Ok(x) => x,
         };
 
-        let secp256k1_signing_key = match secp256k1::SecretKey::from_slice(
+        let secp256k1_signing_key = match secp256k1::ucpiKey::from_slice(
             private_key_data.as_slice(),
         ) {
             Err(err) => {
                 debug!(
-                    "secp256k1_sign() failed to create a secp256k1 secret key from private key: {:?}",
+                    "secp256k1_sign() failed to create a secp256k1 ucpi key from private key: {:?}",
                     err
                 );
 

@@ -20,11 +20,11 @@ which is the recommended way to create any contracts.
 ## Using this project
 
 If you want to get aquainted more with this contratc, you should check out
-[Developing](https://build.scrt.network/dev/tutorials.html), which explains more on how to run tests and develop code.
+[Developing](https://build.ucpi.network/dev/tutorials.html), which explains more on how to run tests and develop code.
 [Publishing](./Publishing.md) contains useful information on how to publish your contract
 to the world, once you are ready to deploy it on a running blockchain. And
 [Importing](./Importing.md) contains information about pulling in other contracts or crates
 that have been published.
 
-But more than anything, there is an [online tutorial](https://learn.figment.io/network-documentation/secret),
+But more than anything, there is an [online tutorial](https://learn.figment.io/network-documentation/ucpi),
 which leads you step-by-step on how to modify this particular contract.

@@ -1,5 +1,5 @@
-//go:build !secretcli
-// +build !secretcli
+//go:build !ucpicli
+// +build !ucpicli
 
 package main
 
@@ -21,9 +21,9 @@ import (
 	"github.com/cosmos/cosmos-sdk/server"
 	"github.com/cosmos/cosmos-sdk/x/genutil"
 	genutiltypes "github.com/cosmos/cosmos-sdk/x/genutil/types"
-	"github.com/enigmampc/SecretNetwork/go-cosmwasm/api"
-	reg "github.com/enigmampc/SecretNetwork/x/registration"
-	ra "github.com/enigmampc/SecretNetwork/x/registration/remote_attestation"
+	"github.com/enigmampc/ucpiNetwork/go-cosmwasm/api"
+	reg "github.com/enigmampc/ucpiNetwork/x/registration"
+	ra "github.com/enigmampc/ucpiNetwork/x/registration/remote_attestation"
 	"github.com/spf13/cobra"
 )
 
@@ -39,8 +39,8 @@ const (
 )
 
 const (
-	mainnetRegistrationService = "https://mainnet-register.scrtlabs.com/api/registernode"
-	pulsarRegistrationService  = "https://testnet-register.scrtlabs.com/api/registernode"
+	mainnetRegistrationService = "https://mainnet-register.ucpilabs.com/api/registernode"
+	pulsarRegistrationService  = "https://testnet-register.ucpilabs.com/api/registernode"
 )
 
 func InitAttestation() *cobra.Command {
@@ -53,20 +53,20 @@ blockchain. Writes the certificate in DER format to ~/attestation_cert
 `,
 		Args: cobra.ExactArgs(0),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			sgxSecretsDir := os.Getenv("SCRT_SGX_STORAGE")
-			if sgxSecretsDir == "" {
-				sgxSecretsDir = os.ExpandEnv("/opt/secret/.sgx_secrets")
+			sgxucpisDir := os.Getenv("ucpi_SGX_STORAGE")
+			if sgxucpisDir == "" {
+				sgxucpisDir = os.ExpandEnv("/opt/ucpi/.sgx_ucpis")
 			}
 
-			// create sgx secrets dir if it doesn't exist
-			if _, err := os.Stat(sgxSecretsDir); !os.IsNotExist(err) {
-				err := os.MkdirAll(sgxSecretsDir, 0o777)
+			// create sgx ucpis dir if it doesn't exist
+			if _, err := os.Stat(sgxucpisDir); !os.IsNotExist(err) {
+				err := os.MkdirAll(sgxucpisDir, 0o777)
 				if err != nil {
 					return err
 				}
 			}
 
-			sgxSecretsPath := sgxSecretsDir + string(os.PathSeparator) + reg.EnclaveRegistrationKey
+			sgxucpisPath := sgxucpisDir + string(os.PathSeparator) + reg.EnclaveRegistrationKey
 
 			resetFlag, err := cmd.Flags().GetBool(flagReset)
 			if err != nil {
@@ -74,7 +74,7 @@ blockchain. Writes the certificate in DER format to ~/attestation_cert
 			}
 
 			if !resetFlag {
-				if _, err := os.Stat(sgxSecretsPath); os.IsNotExist(err) {
+				if _, err := os.Stat(sgxucpisPath); os.IsNotExist(err) {
 					fmt.Println("Creating new enclave registration key")
 					_, err := api.KeyGen()
 					if err != nil {
@@ -224,7 +224,7 @@ func ParseCert() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "parse [cert file]",
 		Short: "Verify and parse a certificate file",
-		Long: "Helper to verify generated credentials, and extract the public key of the secret node, which is used to" +
+		Long: "Helper to verify generated credentials, and extract the public key of the ucpi node, which is used to" +
 			"register the node, during node initialization",
 		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -247,10 +247,10 @@ func ParseCert() *cobra.Command {
 	return cmd
 }
 
-func ConfigureSecret() *cobra.Command {
+func Configureucpi() *cobra.Command {
 	cmd := &cobra.Command{
-		Use: "configure-secret [master-cert] [seed]",
-		Short: "After registration is successful, configure the secret node with the credentials file and the encrypted " +
+		Use: "configure-ucpi [master-cert] [seed]",
+		Short: "After registration is successful, configure the ucpi node with the credentials file and the encrypted " +
 			"seed that was written on-chain",
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -280,14 +280,14 @@ func ConfigureSecret() *cobra.Command {
 				return err
 			}
 
-			// Create .secretd/.node directory if it doesn't exist
-			nodeDir := filepath.Join(homeDir, reg.SecretNodeCfgFolder)
+			// Create .ucpid/.node directory if it doesn't exist
+			nodeDir := filepath.Join(homeDir, reg.ucpiNodeCfgFolder)
 			err = os.MkdirAll(nodeDir, os.ModePerm)
 			if err != nil {
 				return err
 			}
 
-			seedFilePath := filepath.Join(nodeDir, reg.SecretNodeSeedConfig)
+			seedFilePath := filepath.Join(nodeDir, reg.ucpiNodeSeedConfig)
 
 			err = ioutil.WriteFile(seedFilePath, cfgBytes, 0o664)
 			if err != nil {
@@ -334,8 +334,8 @@ func ResetEnclave() *cobra.Command {
 				return err
 			}
 
-			// Remove .secretd/.node/seed.json
-			path := filepath.Join(homeDir, reg.SecretNodeCfgFolder, reg.SecretNodeSeedConfig)
+			// Remove .ucpid/.node/seed.json
+			path := filepath.Join(homeDir, reg.ucpiNodeCfgFolder, reg.ucpiNodeSeedConfig)
 			if _, err := os.Stat(path); !os.IsNotExist(err) {
 				fmt.Printf("Removing %s\n", path)
 				err = os.Remove(path)
@@ -348,18 +348,18 @@ func ResetEnclave() *cobra.Command {
 				}
 			}
 
-			// remove sgx_secrets
-			sgxSecretsDir := os.Getenv("SCRT_SGX_STORAGE")
-			if sgxSecretsDir == "" {
-				sgxSecretsDir = os.ExpandEnv("/opt/secret/.sgx_secrets")
+			// remove sgx_ucpis
+			sgxucpisDir := os.Getenv("ucpi_SGX_STORAGE")
+			if sgxucpisDir == "" {
+				sgxucpisDir = os.ExpandEnv("/opt/ucpi/.sgx_ucpis")
 			}
-			if _, err := os.Stat(sgxSecretsDir); !os.IsNotExist(err) {
-				fmt.Printf("Removing %s\n", sgxSecretsDir)
-				err = os.RemoveAll(sgxSecretsDir)
+			if _, err := os.Stat(sgxucpisDir); !os.IsNotExist(err) {
+				fmt.Printf("Removing %s\n", sgxucpisDir)
+				err = os.RemoveAll(sgxucpisDir)
 				if err != nil {
 					return err
 				}
-				err := os.MkdirAll(sgxSecretsDir, 0o777)
+				err := os.MkdirAll(sgxucpisDir, 0o777)
 				if err != nil {
 					return err
 				}
@@ -401,13 +401,13 @@ Please report any issues with this command
 `,
 		Args: cobra.ExactArgs(0),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			sgxSecretsFolder := os.Getenv("SCRT_SGX_STORAGE")
-			if sgxSecretsFolder == "" {
-				sgxSecretsFolder = os.ExpandEnv("/opt/secret/.sgx_secrets")
+			sgxucpisFolder := os.Getenv("ucpi_SGX_STORAGE")
+			if sgxucpisFolder == "" {
+				sgxucpisFolder = os.ExpandEnv("/opt/ucpi/.sgx_ucpis")
 			}
 
-			sgxEnclaveKeyPath := filepath.Join(sgxSecretsFolder, reg.EnclaveRegistrationKey)
-			sgxAttestationCert := filepath.Join(sgxSecretsFolder, reg.AttestationCertPath)
+			sgxEnclaveKeyPath := filepath.Join(sgxucpisFolder, reg.EnclaveRegistrationKey)
+			sgxAttestationCert := filepath.Join(sgxucpisFolder, reg.AttestationCertPath)
 
 			resetFlag, err := cmd.Flags().GetBool(flagReset)
 			if err != nil {
@@ -544,8 +544,8 @@ Please report any issues with this command
 				return err
 			}
 
-			seedCfgFile := filepath.Join(homeDir, reg.SecretNodeCfgFolder, reg.SecretNodeSeedConfig)
-			seedCfgDir := filepath.Join(homeDir, reg.SecretNodeCfgFolder)
+			seedCfgFile := filepath.Join(homeDir, reg.ucpiNodeCfgFolder, reg.ucpiNodeSeedConfig)
+			seedCfgDir := filepath.Join(homeDir, reg.ucpiNodeCfgFolder)
 
 			// create seed directory if it doesn't exist
 			_, err = os.Stat(seedCfgDir)

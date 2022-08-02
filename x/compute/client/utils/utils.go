@@ -20,8 +20,8 @@ import (
 	"google.golang.org/grpc/encoding"
 	"google.golang.org/grpc/encoding/proto"
 
-	regtypes "github.com/enigmampc/SecretNetwork/x/registration"
-	ra "github.com/enigmampc/SecretNetwork/x/registration/remote_attestation"
+	regtypes "github.com/enigmampc/ucpiNetwork/x/registration"
+	ra "github.com/enigmampc/ucpiNetwork/x/registration/remote_attestation"
 
 	"github.com/miscreant/miscreant.go"
 	"golang.org/x/crypto/curve25519"
@@ -138,7 +138,7 @@ func (ctx WASMContext) getConsensusIoPubKey() ([]byte, error) {
 	if ctx.TestMasterIOCert.Bytes != nil { // TODO check length?
 		masterIoKey.Key = ctx.TestMasterIOCert.Bytes
 	} else {
-		res, _, err := ctx.CLIContext.Query("/secret.registration.v1beta1.Query/TxKey")
+		res, _, err := ctx.CLIContext.Query("/ucpi.registration.v1beta1.Query/TxKey")
 		if err != nil {
 			return nil, err
 		}

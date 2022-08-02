@@ -1,5 +1,5 @@
-//go:build secretcli
-// +build secretcli
+//go:build ucpicli
+// +build ucpicli
 
 package main
 
@@ -19,7 +19,7 @@ blockchain. Writes the certificate in DER format to ~/attestation_cert
 `,
 		Args: cobra.ExactArgs(0),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			println("This is a secretd only function, yo")
+			println("This is a ucpid only function, yo")
 			return nil
 		},
 	}
@@ -38,7 +38,7 @@ blockchain. Writes the certificate in DER format to ~/attestation_cert
 `,
 		Args: cobra.MaximumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			println("This is a secretd only function, yo")
+			println("This is a ucpid only function, yo")
 			return nil
 		},
 	}
@@ -50,11 +50,11 @@ func ParseCert() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "parse [cert file]",
 		Short: "Verify and parse a certificate file",
-		Long: "Helper to verify generated credentials, and extract the public key of the secret node, which is used to" +
+		Long: "Helper to verify generated credentials, and extract the public key of the ucpi node, which is used to" +
 			"register the node, during node initialization",
 		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			println("This is a secretd only function, yo")
+			println("This is a ucpid only function, yo")
 			return nil
 		},
 	}
@@ -62,14 +62,14 @@ func ParseCert() *cobra.Command {
 	return cmd
 }
 
-func ConfigureSecret() *cobra.Command {
+func Configureucpi() *cobra.Command {
 	cmd := &cobra.Command{
-		Use: "configure-secret [master-cert] [seed]",
-		Short: "After registration is successful, configure the secret node with the credentials file and the encrypted " +
+		Use: "configure-ucpi [master-cert] [seed]",
+		Short: "After registration is successful, configure the ucpi node with the credentials file and the encrypted " +
 			"seed that was written on-chain",
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			println("This is a secretd only function, yo")
+			println("This is a ucpid only function, yo")
 			return nil
 		},
 	}
@@ -84,7 +84,7 @@ func HealthCheck() *cobra.Command {
 		Long:  "Help diagnose issues by performing a basic sanity test that SGX is working properly",
 		Args:  cobra.ExactArgs(0),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			println("This is a secretd only function, yo")
+			println("This is a ucpid only function, yo")
 			return nil
 		},
 	}
@@ -100,7 +100,7 @@ func ResetEnclave() *cobra.Command {
 			"You will have to go through registration again to be able to start the node",
 		Args: cobra.ExactArgs(0),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			println("This is a secretd only function, yo")
+			println("This is a ucpid only function, yo")
 			return nil
 		},
 	}
@@ -117,7 +117,7 @@ Please report any issues with this command
 `,
 		Args: cobra.ExactArgs(0),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			println("This is a secretd only function, yo")
+			println("This is a ucpid only function, yo")
 			return nil
 		},
 	}

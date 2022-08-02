@@ -13,8 +13,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	authcmd "github.com/cosmos/cosmos-sdk/x/auth/client/cli"
 	"github.com/cosmos/cosmos-sdk/x/crisis"
-	scrt "github.com/enigmampc/SecretNetwork/types"
-	"github.com/enigmampc/SecretNetwork/x/compute"
+	ucpi "github.com/enigmampc/ucpiNetwork/types"
+	"github.com/enigmampc/ucpiNetwork/x/compute"
 	"github.com/rs/zerolog"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
@@ -22,7 +22,7 @@ import (
 	//"github.com/tendermint/tendermint/libs/cli"
 
 	"github.com/cosmos/cosmos-sdk/snapshots"
-	"github.com/enigmampc/SecretNetwork/app"
+	"github.com/enigmampc/ucpiNetwork/app"
 
 	"github.com/spf13/cast"
 	"github.com/spf13/cobra"
@@ -45,7 +45,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/auth/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	genutilcli "github.com/cosmos/cosmos-sdk/x/genutil/client/cli"
-	secretlegacy "github.com/enigmampc/SecretNetwork/app/legacy"
+	ucpilegacy "github.com/enigmampc/ucpiNetwork/app/legacy"
 )
 
 // thanks @terra-project for this fix
@@ -62,7 +62,7 @@ func bindFlags(cmd *cobra.Command, v *viper.Viper) {
 	cmd.Flags().VisitAll(func(f *pflag.Flag) {
 		// Environment variables can't have dashes in them, so bind them to their equivalent
 		// keys with underscores, e.g. --favorite-color to STING_FAVORITE_COLOR
-		_ = v.BindEnv(f.Name, fmt.Sprintf("%s_%s", "SECRET_NETWORK", strings.ToUpper(strings.ReplaceAll(f.Name, "-", "_"))))
+		_ = v.BindEnv(f.Name, fmt.Sprintf("%s_%s", "ucpi_NETWORK", strings.ToUpper(strings.ReplaceAll(f.Name, "-", "_"))))
 		_ = v.BindPFlag(f.Name, f)
 
 		// Apply the viper config value to the flag when the flag is not set and viper has a value
@@ -79,12 +79,12 @@ func NewRootCmd() (*cobra.Command, app.EncodingConfig) {
 	encodingConfig := app.MakeEncodingConfig()
 
 	config := sdk.GetConfig()
-	config.SetCoinType(scrt.CoinType)
-	config.SetPurpose(scrt.CoinPurpose)
-	config.SetBech32PrefixForAccount(scrt.Bech32PrefixAccAddr, scrt.Bech32PrefixAccPub)
-	config.SetBech32PrefixForValidator(scrt.Bech32PrefixValAddr, scrt.Bech32PrefixValPub)
-	config.SetBech32PrefixForConsensusNode(scrt.Bech32PrefixConsAddr, scrt.Bech32PrefixConsPub)
-	config.SetAddressVerifier(scrt.AddressVerifier)
+	config.SetCoinType(ucpi.CoinType)
+	config.SetPurpose(ucpi.CoinPurpose)
+	config.SetBech32PrefixForAccount(ucpi.Bech32PrefixAccAddr, ucpi.Bech32PrefixAccPub)
+	config.SetBech32PrefixForValidator(ucpi.Bech32PrefixValAddr, ucpi.Bech32PrefixValPub)
+	config.SetBech32PrefixForConsensusNode(ucpi.Bech32PrefixConsAddr, ucpi.Bech32PrefixConsPub)
+	config.SetAddressVerifier(ucpi.AddressVerifier)
 	config.Seal()
 
 	initClientCtx := client.Context{}.
@@ -96,11 +96,11 @@ func NewRootCmd() (*cobra.Command, app.EncodingConfig) {
 		WithAccountRetriever(types.AccountRetriever{}).
 		// WithBroadcastMode(flags.BroadcastBlock).
 		WithHomeDir(app.DefaultNodeHome).
-		WithViper("SECRET")
+		WithViper("ucpi")
 
 	rootCmd := &cobra.Command{
-		Use:   "secretd",
-		Short: "The Secret Network App Daemon (server)",
+		Use:   "ucpid",
+		Short: "The ucpi Network App Daemon (server)",
 		PersistentPreRunE: func(cmd *cobra.Command, _ []string) error {
 			cmd.SetOut(cmd.OutOrStdout())
 			cmd.SetErr(cmd.ErrOrStderr())
@@ -119,13 +119,13 @@ func NewRootCmd() (*cobra.Command, app.EncodingConfig) {
 				return err
 			}
 
-			secretAppTemplate, secretAppConfig := initAppConfig()
+			ucpiAppTemplate, ucpiAppConfig := initAppConfig()
 
 			// ctx := server.GetServerContextFromCmd(cmd)
 
 			// bindFlags(cmd, ctx.Viper)
 
-			return server.InterceptConfigsPreRunHandler(cmd, secretAppTemplate, secretAppConfig)
+			return server.InterceptConfigsPreRunHandler(cmd, ucpiAppTemplate, ucpiAppConfig)
 			// return initConfig(&initClientCtx, cmd)
 		},
 		SilenceUsage: true,
@@ -150,7 +150,7 @@ func Execute(rootCmd *cobra.Command) error {
 
 	rootCmd.PersistentFlags().String(flags.FlagLogLevel, zerolog.InfoLevel.String(), "The logging level (trace|debug|info|warn|error|fatal|panic)")
 	rootCmd.PersistentFlags().String(flags.FlagLogFormat, tmcfg.LogFormatPlain, "The logging format (json|plain)")
-	executor := tmcli.PrepareBaseCmd(rootCmd, "SECRET_NETWORK", app.DefaultNodeHome)
+	executor := tmcli.PrepareBaseCmd(rootCmd, "ucpi_NETWORK", app.DefaultNodeHome)
 	return executor.ExecuteContext(ctx)
 }
 
@@ -162,7 +162,7 @@ func initRootCmd(rootCmd *cobra.Command, encodingConfig app.EncodingConfig) {
 		InitCmd(app.ModuleBasics(), app.DefaultNodeHome),
 		// updateTmParamsAndInit(app.ModuleBasics(), app.DefaultNodeHome),
 		genutilcli.CollectGenTxsCmd(banktypes.GenesisBalancesIterator{}, app.DefaultNodeHome),
-		secretlegacy.MigrateGenesisCmd(),
+		ucpilegacy.MigrateGenesisCmd(),
 		genutilcli.GenTxCmd(app.ModuleBasics(), encodingConfig.TxConfig, banktypes.GenesisBalancesIterator{}, app.DefaultNodeHome),
 		genutilcli.ValidateGenesisCmd(app.ModuleBasics()),
 		AddGenesisAccountCmd(app.DefaultNodeHome),
@@ -181,7 +181,7 @@ func initRootCmd(rootCmd *cobra.Command, encodingConfig app.EncodingConfig) {
 		InitAttestation(),
 		InitBootstrapCmd(),
 		ParseCert(),
-		ConfigureSecret(),
+		Configureucpi(),
 		HealthCheck(),
 		ResetEnclave(),
 		AutoRegisterNode(),
@@ -290,7 +290,7 @@ func newApp(logger log.Logger, db dbm.DB, traceStore io.Writer, appOpts serverty
 
 	// fmt.Printf("bootstrap: %s", cast.ToString(bootstrap))
 
-	return app.NewSecretNetworkApp(logger, db, traceStore, true, skipUpgradeHeights,
+	return app.NewucpiNetworkApp(logger, db, traceStore, true, skipUpgradeHeights,
 		cast.ToString(appOpts.Get(flags.FlagHome)),
 		cast.ToUint(appOpts.Get(server.FlagInvCheckPeriod)),
 		bootstrap,
@@ -317,15 +317,15 @@ func exportAppStateAndTMValidators(
 
 	encCfg := app.MakeEncodingConfig()
 	encCfg.Marshaler = codec.NewProtoCodec(encCfg.InterfaceRegistry)
-	var wasmApp *app.SecretNetworkApp
+	var wasmApp *app.ucpiNetworkApp
 	if height != -1 {
-		wasmApp = app.NewSecretNetworkApp(logger, db, traceStore, false, map[int64]bool{}, "", uint(1), bootstrap, appOpts, compute.DefaultWasmConfig())
+		wasmApp = app.NewucpiNetworkApp(logger, db, traceStore, false, map[int64]bool{}, "", uint(1), bootstrap, appOpts, compute.DefaultWasmConfig())
 
 		if err := wasmApp.LoadHeight(height); err != nil {
 			return servertypes.ExportedApp{}, err
 		}
 	} else {
-		wasmApp = app.NewSecretNetworkApp(logger, db, traceStore, true, map[int64]bool{}, "", uint(1), bootstrap, appOpts, compute.DefaultWasmConfig())
+		wasmApp = app.NewucpiNetworkApp(logger, db, traceStore, true, map[int64]bool{}, "", uint(1), bootstrap, appOpts, compute.DefaultWasmConfig())
 	}
 
 	return wasmApp.ExportAppStateAndValidators(forZeroHeight, jailWhiteList)
@@ -344,7 +344,7 @@ func updateTmParamsAndInit(mbm module.BasicManager, defaultNodeHome string) *cob
 
 		appConfigFilePath := filepath.Join(defaultNodeHome, "config/app.toml")
 		appConf, _ := serverconfig.ParseConfig(viper.GetViper())
-		appConf.MinGasPrices = "0.25uscrt"
+		appConf.MinGasPrices = "0.25uucpi"
 
 		serverconfig.WriteConfigFile(appConfigFilePath, appConf)
 

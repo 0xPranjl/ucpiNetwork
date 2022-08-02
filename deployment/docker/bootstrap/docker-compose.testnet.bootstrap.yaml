@@ -11,15 +11,15 @@ services:
     tty: true
 
   bootstrap:
-    image: enigmampc/secret-network-bootstrap:testnet
+    image: enigmampc/ucpi-network-bootstrap:testnet
     container_name: bootstrap
     devices:
       - /dev/sgx
     volumes:
       - /tmp/aesmd:/var/run/aesmd
-      - /tmp/.secretd:/tmp/.secretd
-      - /tmp/.secretcli:/root/.secretcli
-      - /tmp/.sgx_secrets:/opt/secret/.sgx_secrets
+      - /tmp/.ucpid:/tmp/.ucpid
+      - /tmp/.ucpicli:/root/.ucpicli
+      - /tmp/.sgx_ucpis:/opt/ucpi/.sgx_ucpis
     environment:
       - SGX_MODE=HW
     ports:

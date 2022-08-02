@@ -180,7 +180,7 @@ dependencies = [
  "parity-wasm",
  "parking_lot",
  "schemars",
- "secret-cosmwasm-std",
+ "ucpi-cosmwasm-std",
  "serde",
  "serde_json",
  "sgx_types",
@@ -303,7 +303,7 @@ dependencies = [
  "ctor",
  "errno",
  "log",
- "secret-cosmwasm-std",
+ "ucpi-cosmwasm-std",
  "serde",
  "serde_json",
  "sgx_edl",
@@ -603,7 +603,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d29ab0c6d3fc0ee92fe66e2d99f700eab17a8d57d1c1d3b748380fb20baa78cd"
 
 [[package]]
-name = "secret-cosmwasm-std"
+name = "ucpi-cosmwasm-std"
 version = "0.10.1"
 dependencies = [
  "base64 0.11.0",

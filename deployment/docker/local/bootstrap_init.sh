@@ -1,50 +1,50 @@
 #!/bin/bash
 set -euo pipefail
 
-file=~/.secretd/config/genesis.json
+file=~/.ucpid/config/genesis.json
 if [ ! -e "$file" ]
 then
   # init the node
-  rm -rf ~/.secretd/*
-  rm -rf ~/.secretcli/*
-  rm -rf ~/.sgx_secrets/*
-  secretcli config chain-id enigma-pub-testnet-3
-  secretcli config output json
-#  secretcli config indent true
-#  secretcli config trust-node true
-  secretcli config keyring-backend test
+  rm -rf ~/.ucpid/*
+  rm -rf ~/.ucpicli/*
+  rm -rf ~/.sgx_ucpis/*
+  ucpicli config chain-id enigma-pub-testnet-3
+  ucpicli config output json
+#  ucpicli config indent true
+#  ucpicli config trust-node true
+  ucpicli config keyring-backend test
 
-  secretd init banana --chain-id enigma-pub-testnet-3
+  ucpid init banana --chain-id enigma-pub-testnet-3
 
-  cp ~/node_key.json ~/.secretd/config/node_key.json
+  cp ~/node_key.json ~/.ucpid/config/node_key.json
 
-  perl -i -pe 's/"stake"/"uscrt"/g' ~/.secretd/config/genesis.json
+  perl -i -pe 's/"stake"/"uucpi"/g' ~/.ucpid/config/genesis.json
 
-  perl -i -pe 's/"1814400s"/"80s"/g' ~/.secretd/config/genesis.json
+  perl -i -pe 's/"1814400s"/"80s"/g' ~/.ucpid/config/genesis.json
 
-  secretcli keys add a
-  secretcli keys add b
-  secretcli keys add c
-  secretcli keys add d
+  ucpicli keys add a
+  ucpicli keys add b
+  ucpicli keys add c
+  ucpicli keys add d
 
-  secretd add-genesis-account "$(secretcli keys show -a a)" 1000000000000000000uscrt
-#  secretd add-genesis-account "$(secretcli keys show -a b)" 1000000000000000000uscrt
-#  secretd add-genesis-account "$(secretcli keys show -a c)" 1000000000000000000uscrt
-#  secretd add-genesis-account "$(secretcli keys show -a d)" 1000000000000000000uscrt
+  ucpid add-genesis-account "$(ucpicli keys show -a a)" 1000000000000000000uucpi
+#  ucpid add-genesis-account "$(ucpicli keys show -a b)" 1000000000000000000uucpi
+#  ucpid add-genesis-account "$(ucpicli keys show -a c)" 1000000000000000000uucpi
+#  ucpid add-genesis-account "$(ucpicli keys show -a d)" 1000000000000000000uucpi
 
 
-  secretd gentx a 1000000uscrt --keyring-backend test --chain-id enigma-pub-testnet-3
+  ucpid gentx a 1000000uucpi --keyring-backend test --chain-id enigma-pub-testnet-3
   # These fail for some reason:
-  # secretd gentx --name b --keyring-backend test --amount 1000000uscrt
-  # secretd gentx --name c --keyring-backend test --amount 1000000uscrt
-  # secretd gentx --name d --keyring-backend test --amount 1000000uscrt
+  # ucpid gentx --name b --keyring-backend test --amount 1000000uucpi
+  # ucpid gentx --name c --keyring-backend test --amount 1000000uucpi
+  # ucpid gentx --name d --keyring-backend test --amount 1000000uucpi
 
-  secretd collect-gentxs
-  secretd validate-genesis
+  ucpid collect-gentxs
+  ucpid validate-genesis
 
-  secretd init-bootstrap
-  secretd validate-genesis
+  ucpid init-bootstrap
+  ucpid validate-genesis
 fi
 
 # sleep infinity
-source /opt/sgxsdk/environment && RUST_BACKTRACE=1 secretd start --rpc.laddr tcp://0.0.0.0:26657 --bootstrap
+source /opt/sgxsdk/environment && RUST_BACKTRACE=1 ucpid start --rpc.laddr tcp://0.0.0.0:26657 --bootstrap

@@ -950,7 +950,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "secret-enclave"
+name = "ucpi-enclave"
 version = "1.2.4"
 dependencies = [
  "base64 0.13.0 (git+https://github.com/mesalock-linux/rust-base64-sgx?rev=dc7389e10817b078f289386b3b6a852ab6c4c021)",
@@ -987,7 +987,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "secret-query-enclave"
+name = "ucpi-query-enclave"
 version = "1.2.4"
 dependencies = [
  "ctor",

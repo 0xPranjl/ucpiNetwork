@@ -1,5 +1,5 @@
 use crate::traits::Kdf;
-use crate::{AESKey, Seed, SECRET_KEY_SIZE};
+use crate::{AESKey, Seed, ucpi_KEY_SIZE};
 
 use ring::hkdf;
 
@@ -33,7 +33,7 @@ fn derive_key(input_bytes: &[u8], info: &[&[u8]]) -> AESKey {
 
     let prk = salt.extract(input_bytes);
 
-    let okm = prk.expand(info, My(SECRET_KEY_SIZE)).unwrap();
+    let okm = prk.expand(info, My(ucpi_KEY_SIZE)).unwrap();
 
     let mut result: AESKey = AESKey::default();
 

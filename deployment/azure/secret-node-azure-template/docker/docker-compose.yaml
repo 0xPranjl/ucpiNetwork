@@ -11,14 +11,14 @@ services:
     tty: true
 
   node:
-    image: enigmampc/secret-network-node:v1.0.4-mainnet
+    image: enigmampc/ucpi-network-node:v1.0.4-mainnet
     devices:
       - /dev/sgx
     volumes:
       - /tmp/aesmd:/var/run/aesmd
-      - /tmp/.secretd:/root/.secretd
-      - /tmp/.secretcli:/root/.secretcli
-      - /tmp/.sgx_secrets:/root/.sgx_secrets
+      - /tmp/.ucpid:/root/.ucpid
+      - /tmp/.ucpicli:/root/.ucpicli
+      - /tmp/.sgx_ucpis:/root/.sgx_ucpis
     environment:
       - SGX_MODE=HW
       - MONIKER

@@ -12,7 +12,7 @@ pub const SEED_KEY_SIZE: usize = 32;
 pub const SYMMETRIC_KEY_SIZE: usize = 256 / 8;
 /// The size of the master seed
 //pub const SEED_SIZE: usize = 32;
-/// The size of secret keys
+/// The size of ucpi keys
 
 type AlignedKey = sgx_align_ec256_private_t;
 type AlignedSeed = sgx_align_ec256_private_t;
@@ -69,10 +69,10 @@ impl ExportECKey for AESKey {
 
 impl From<Ed25519PrivateKey> for AESKey {
     fn from(value: Ed25519PrivateKey) -> Self {
-        let mut secret_key = AESKey::default();
-        secret_key.as_mut().copy_from_slice(value.key_ref());
+        let mut ucpi_key = AESKey::default();
+        ucpi_key.as_mut().copy_from_slice(value.key_ref());
 
-        secret_key
+        ucpi_key
     }
 }
 
@@ -108,10 +108,10 @@ impl AsMut<[u8; SEED_KEY_SIZE]> for Seed {
 
 impl From<Ed25519PrivateKey> for Seed {
     fn from(value: Ed25519PrivateKey) -> Self {
-        let mut secret_key = Seed::default();
-        secret_key.as_mut().copy_from_slice(value.key_ref());
+        let mut ucpi_key = Seed::default();
+        ucpi_key.as_mut().copy_from_slice(value.key_ref());
 
-        secret_key
+        ucpi_key
     }
 }
 

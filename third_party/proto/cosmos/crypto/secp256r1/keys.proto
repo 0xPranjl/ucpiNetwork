@@ -18,6 +18,6 @@ message PubKey {
 
 // PrivKey defines a secp256r1 ECDSA private key.
 message PrivKey {
-  // secret number serialized using big-endian encoding
-  bytes secret = 1 [(gogoproto.customtype) = "ecdsaSK"];
+  // ucpi number serialized using big-endian encoding
+  bytes ucpi = 1 [(gogoproto.customtype) = "ecdsaSK"];
 }

@@ -23,7 +23,7 @@ use super::seed_exchange::encrypt_seed;
 /// new node, based on a received certificate. If the node is authenticated successfully, the seed
 /// will be encrypted and shared with the registering node.
 ///
-/// The seed is encrypted with a key derived from the secret master key of the chain, and the public
+/// The seed is encrypted with a key derived from the ucpi master key of the chain, and the public
 /// key of the requesting chain
 ///
 /// This function happens on-chain, so any panic here might cause the chain to go boom

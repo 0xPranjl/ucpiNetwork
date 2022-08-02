@@ -2,13 +2,13 @@ version: '3'
 
 services:
   bootstrap:
-    image: enigmampc/secret-network-sw-dev-custom-bootstrap:latest
+    image: enigmampc/ucpi-network-sw-dev-custom-bootstrap:latest
     container_name: bootstrap
     volumes:
-#      - /tmp/secretcli:/root/.secretcli
-      - /tmp/secretd-bootstrap:/root/.secretd
-#      - /tmp/secretdbootstrap:/root/.secretd
-      - /tmp/sgx_secrets:/opt/secret/.sgx_secrets
+#      - /tmp/ucpicli:/root/.ucpicli
+      - /tmp/ucpid-bootstrap:/root/.ucpid
+#      - /tmp/ucpidbootstrap:/root/.ucpid
+      - /tmp/sgx_ucpis:/opt/ucpi/.sgx_ucpis
     stdin_open: true
     tty: true
     environment:
@@ -26,16 +26,16 @@ services:
       - 1337:1337
 
 #  node:
-#    image: enigmampc/secret-network-sw-dev-custom-node:latest
+#    image: enigmampc/ucpi-network-sw-dev-custom-node:latest
 #    container_name: node
 #    depends_on:
 #      - bootstrap
 #    volumes:
-#      - /tmp/secretd-bootstrap:/tmp/.secretd
-##      - /tmp/secretdbootstrap:/tmp/.secretd
-#      - /tmp/secretd-node:/root/.secretd
-#      - /tmp/secretcli:/root/.secretcli
-##      - /tmp/sgx_secrets:/root/.sgx_secrets
+#      - /tmp/ucpid-bootstrap:/tmp/.ucpid
+##      - /tmp/ucpidbootstrap:/tmp/.ucpid
+#      - /tmp/ucpid-node:/root/.ucpid
+#      - /tmp/ucpicli:/root/.ucpicli
+##      - /tmp/sgx_ucpis:/root/.sgx_ucpis
 #    stdin_open: true
 #    tty: true
 #    environment:

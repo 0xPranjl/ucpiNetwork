@@ -17,7 +17,7 @@
         "type": "Microsoft.Common.TextBox",
         "label": "Application Name",
         "defaultValue": "",
-        "toolTip": "Name of the secret node virtual machine",
+        "toolTip": "Name of the ucpi node virtual machine",
         "constraints": {
           "regex": "^[a-z0-9A-Z-]{1,50}$",
           "validationMessage": "Only alphanumeric and hyphen characters are allowed, and the value must be 1-50 characters long.",
@@ -160,7 +160,7 @@
       },
       {
         "name": "nodeParameters",
-        "label": "Secret Node Parameters",
+        "label": "ucpi Node Parameters",
         "elements": [
           {
             "name": "registrationService",
@@ -223,7 +223,7 @@
             "name": "rpcAddress",
             "type": "Microsoft.Common.TextBox",
             "label": "RPC address",
-            "toolTip": "Address of a secret-network node that exposes RPC services. This is used in node registration and for genesis file extraction",
+            "toolTip": "Address of a ucpi-network node that exposes RPC services. This is used in node registration and for genesis file extraction",
             "defaultValue": "",
             "constraints": {
               "required": true,

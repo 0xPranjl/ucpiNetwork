@@ -122,8 +122,8 @@ jobs:
           path: erc20.wasm
       - uses: actions/upload-artifact@v2
         with:
-          name: secretd
-          path: secretd
+          name: ucpid
+          path: ucpid
       - uses: actions/upload-artifact@v2
         with:
           name: contract.wasm
@@ -201,7 +201,7 @@ jobs:
           export SGX_MODE=SW
           cp librust_cosmwasm_enclave.signed.so ./x/compute/internal/keeper
           mkdir -p ias_keys/develop
-          mkdir -p /opt/secret/.sgx_secrets/
+          mkdir -p /opt/ucpi/.sgx_ucpis/
           echo "not_a_key" > ias_keys/develop/spid.txt
           echo "not_a_key" > ias_keys/develop/api_key.txt
           LOG_LEVEL=ERROR go test -v ./x/compute/client/...
@@ -275,12 +275,12 @@ jobs:
       - name: Build docker testnet
         run: |
           echo not_a_key | tee {api_key,spid}.txt
-          DOCKER_TAG=v0.0.0 make build-localsecret
-      - name: Run secret.js tests
+          DOCKER_TAG=v0.0.0 make build-localucpi
+      - name: Run ucpi.js tests
         run: |
-          git clone --depth 1 https://github.com/scrtlabs/secret.js
-          cd secret.js
+          git clone --depth 1 https://github.com/ucpilabs/ucpi.js
+          cd ucpi.js
           # Use the docker images that we built just a few steps above
-          perl -i -pe 's/localsecret:.+?"/localsecret:v0.0.0"/' ./test/*
+          perl -i -pe 's/localucpi:.+?"/localucpi:v0.0.0"/' ./test/*
           yarn
           yarn test

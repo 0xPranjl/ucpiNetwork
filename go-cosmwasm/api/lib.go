@@ -1,5 +1,5 @@
-//go:build !secretcli
-// +build !secretcli
+//go:build !ucpicli
+// +build !ucpicli
 
 package api
 
@@ -12,7 +12,7 @@ import (
 	"runtime"
 	"syscall"
 
-	"github.com/enigmampc/SecretNetwork/go-cosmwasm/types"
+	"github.com/enigmampc/ucpiNetwork/go-cosmwasm/types"
 )
 
 // nice aliases to the rust names

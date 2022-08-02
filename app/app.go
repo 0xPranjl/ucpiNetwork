@@ -37,9 +37,9 @@ import (
 	porttypes "github.com/cosmos/ibc-go/v3/modules/core/05-port/types"
 	ibchost "github.com/cosmos/ibc-go/v3/modules/core/24-host"
 	ibckeeper "github.com/cosmos/ibc-go/v3/modules/core/keeper"
-	v1_3 "github.com/enigmampc/SecretNetwork/app/upgrades/v1.3"
-	icaauth "github.com/enigmampc/SecretNetwork/x/mauth"
-	icaauthtypes "github.com/enigmampc/SecretNetwork/x/mauth/types"
+	v1_3 "github.com/enigmampc/ucpiNetwork/app/upgrades/v1.3"
+	icaauth "github.com/enigmampc/ucpiNetwork/x/mauth"
+	icaauthtypes "github.com/enigmampc/ucpiNetwork/x/mauth/types"
 
 	"github.com/cosmos/cosmos-sdk/version"
 	"github.com/cosmos/cosmos-sdk/x/auth"
@@ -53,7 +53,7 @@ import (
 	authzmodule "github.com/cosmos/cosmos-sdk/x/authz/module"
 	icacontrollerkeeper "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/controller/keeper"
 	icahostkeeper "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/host/keeper"
-	icaauthkeeper "github.com/enigmampc/SecretNetwork/x/mauth/keeper"
+	icaauthkeeper "github.com/enigmampc/ucpiNetwork/x/mauth/keeper"
 
 	"github.com/cosmos/cosmos-sdk/x/bank"
 	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
@@ -94,8 +94,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/upgrade"
 	upgradekeeper "github.com/cosmos/cosmos-sdk/x/upgrade/keeper"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
-	"github.com/enigmampc/SecretNetwork/x/compute"
-	reg "github.com/enigmampc/SecretNetwork/x/registration"
+	"github.com/enigmampc/ucpiNetwork/x/compute"
+	reg "github.com/enigmampc/ucpiNetwork/x/registration"
 	"github.com/spf13/cast"
 
 	"github.com/gorilla/mux"
@@ -107,18 +107,18 @@ import (
 	dbm "github.com/tendermint/tm-db"
 
 	// unnamed import of statik for swagger UI support
-	_ "github.com/enigmampc/SecretNetwork/client/docs/statik"
+	_ "github.com/enigmampc/ucpiNetwork/client/docs/statik"
 )
 
-const appName = "secret"
+const appName = "ucpi"
 
 var (
 	// DefaultCLIHome default home directories for the application CLI
 	homeDir, _     = os.UserHomeDir()
-	DefaultCLIHome = filepath.Join(homeDir, ".secretd")
+	DefaultCLIHome = filepath.Join(homeDir, ".ucpid")
 
 	// DefaultNodeHome sets the folder where the applcation data and configuration will be stored
-	DefaultNodeHome = filepath.Join(homeDir, ".secretd")
+	DefaultNodeHome = filepath.Join(homeDir, ".ucpid")
 
 	// module account permissions
 	maccPerms = map[string][]string{
@@ -139,10 +139,10 @@ var (
 )
 
 // Verify app interface at compile time
-var _ simapp.App = (*SecretNetworkApp)(nil)
+var _ simapp.App = (*ucpiNetworkApp)(nil)
 
-// SecretNetworkApp extended ABCI application
-type SecretNetworkApp struct {
+// ucpiNetworkApp extended ABCI application
+type ucpiNetworkApp struct {
 	*baseapp.BaseApp
 	legacyAmino       *codec.LegacyAmino
 	appCodec          codec.Codec
@@ -194,35 +194,35 @@ type SecretNetworkApp struct {
 	configurator module.Configurator
 }
 
-func (app *SecretNetworkApp) GetBaseApp() *baseapp.BaseApp {
+func (app *ucpiNetworkApp) GetBaseApp() *baseapp.BaseApp {
 	return app.BaseApp
 }
 
-func (app *SecretNetworkApp) GetStakingKeeper() stakingkeeper.Keeper {
+func (app *ucpiNetworkApp) GetStakingKeeper() stakingkeeper.Keeper {
 	return app.stakingKeeper
 }
 
-func (app *SecretNetworkApp) GetIBCKeeper() *ibckeeper.Keeper {
+func (app *ucpiNetworkApp) GetIBCKeeper() *ibckeeper.Keeper {
 	return app.ibcKeeper
 }
 
-func (app *SecretNetworkApp) GetScopedIBCKeeper() capabilitykeeper.ScopedKeeper {
+func (app *ucpiNetworkApp) GetScopedIBCKeeper() capabilitykeeper.ScopedKeeper {
 	return app.ScopedIBCKeeper
 }
 
-func (app *SecretNetworkApp) GetTxConfig() client.TxConfig {
+func (app *ucpiNetworkApp) GetTxConfig() client.TxConfig {
 	return app.GetTxConfig()
 }
 
-func (app *SecretNetworkApp) AppCodec() codec.Codec {
+func (app *ucpiNetworkApp) AppCodec() codec.Codec {
 	return app.appCodec
 }
 
-func (app *SecretNetworkApp) RegisterTxService(clientCtx client.Context) {
+func (app *ucpiNetworkApp) RegisterTxService(clientCtx client.Context) {
 	authtx.RegisterTxService(app.BaseApp.GRPCQueryRouter(), clientCtx, app.BaseApp.Simulate, app.interfaceRegistry)
 }
 
-func (app *SecretNetworkApp) RegisterTendermintService(clientCtx client.Context) {
+func (app *ucpiNetworkApp) RegisterTendermintService(clientCtx client.Context) {
 	tmservice.RegisterTendermintService(app.BaseApp.GRPCQueryRouter(), clientCtx, app.interfaceRegistry)
 }
 
@@ -232,8 +232,8 @@ type WasmWrapper struct {
 	Wasm compute.WasmConfig `mapstructure:"wasm"`
 }
 
-// NewSecretNetworkApp is a constructor function for enigmaChainApp
-func NewSecretNetworkApp(
+// NewucpiNetworkApp is a constructor function for enigmaChainApp
+func NewucpiNetworkApp(
 	logger tmlog.Logger,
 	db dbm.DB,
 	traceStore io.Writer,
@@ -246,7 +246,7 @@ func NewSecretNetworkApp(
 	appOpts servertypes.AppOptions,
 	computeConfig *compute.WasmConfig,
 	baseAppOptions ...func(*baseapp.BaseApp),
-) *SecretNetworkApp {
+) *ucpiNetworkApp {
 	encodingConfig := MakeEncodingConfig()
 	appCodec, legacyAmino := encodingConfig.Marshaler, encodingConfig.Amino
 	interfaceRegistry := encodingConfig.InterfaceRegistry
@@ -270,7 +270,7 @@ func NewSecretNetworkApp(
 	memKeys := sdk.NewMemoryStoreKeys(capabilitytypes.MemStoreKey)
 
 	// Initialize our application with the store keys it requires
-	app := &SecretNetworkApp{
+	app := &ucpiNetworkApp{
 		BaseApp:           bApp,
 		legacyAmino:       legacyAmino,
 		appCodec:          appCodec,
@@ -634,20 +634,20 @@ func NewSecretNetworkApp(
 }
 
 // Name returns the name of the App
-func (app *SecretNetworkApp) Name() string { return app.BaseApp.Name() }
+func (app *ucpiNetworkApp) Name() string { return app.BaseApp.Name() }
 
 // BeginBlocker application updates every begin block
-func (app *SecretNetworkApp) BeginBlocker(ctx sdk.Context, req abci.RequestBeginBlock) abci.ResponseBeginBlock {
+func (app *ucpiNetworkApp) BeginBlocker(ctx sdk.Context, req abci.RequestBeginBlock) abci.ResponseBeginBlock {
 	return app.mm.BeginBlock(ctx, req)
 }
 
 // EndBlocker application updates every end block
-func (app *SecretNetworkApp) EndBlocker(ctx sdk.Context, req abci.RequestEndBlock) abci.ResponseEndBlock {
+func (app *ucpiNetworkApp) EndBlocker(ctx sdk.Context, req abci.RequestEndBlock) abci.ResponseEndBlock {
 	return app.mm.EndBlock(ctx, req)
 }
 
 // InitChainer application update at chain initialization
-func (app *SecretNetworkApp) InitChainer(ctx sdk.Context, req abci.RequestInitChain) abci.ResponseInitChain {
+func (app *ucpiNetworkApp) InitChainer(ctx sdk.Context, req abci.RequestInitChain) abci.ResponseInitChain {
 	var genesisState simapp.GenesisState
 	if err := tmjson.Unmarshal(req.AppStateBytes, &genesisState); err != nil {
 		panic(err)
@@ -659,12 +659,12 @@ func (app *SecretNetworkApp) InitChainer(ctx sdk.Context, req abci.RequestInitCh
 }
 
 // LoadHeight loads a particular height
-func (app *SecretNetworkApp) LoadHeight(height int64) error {
+func (app *ucpiNetworkApp) LoadHeight(height int64) error {
 	return app.LoadVersion(height)
 }
 
 // ModuleAccountAddrs returns all the app's module account addresses.
-func (app *SecretNetworkApp) ModuleAccountAddrs() map[string]bool {
+func (app *ucpiNetworkApp) ModuleAccountAddrs() map[string]bool {
 	modAccAddrs := make(map[string]bool)
 	for acc := range maccPerms {
 		modAccAddrs[authtypes.NewModuleAddress(acc).String()] = true
@@ -674,7 +674,7 @@ func (app *SecretNetworkApp) ModuleAccountAddrs() map[string]bool {
 }
 
 // SimulationManager implements the SimulationApp interface
-func (app *SecretNetworkApp) SimulationManager() *module.SimulationManager {
+func (app *ucpiNetworkApp) SimulationManager() *module.SimulationManager {
 	return app.sm
 }
 
@@ -688,14 +688,14 @@ func GetMaccPerms() map[string][]string {
 }
 
 // getSubspace returns a param subspace for a given module name.
-func (app *SecretNetworkApp) getSubspace(moduleName string) paramstypes.Subspace {
+func (app *ucpiNetworkApp) getSubspace(moduleName string) paramstypes.Subspace {
 	subspace, _ := app.paramsKeeper.GetSubspace(moduleName)
 	return subspace
 }
 
 // RegisterAPIRoutes registers all application module routes with the provided
 // API server.
-func (app *SecretNetworkApp) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.APIConfig) {
+func (app *ucpiNetworkApp) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.APIConfig) {
 	clientCtx := apiSvr.ClientCtx
 	rpc.RegisterRoutes(clientCtx, apiSvr.Router)
 	// Register legacy tx routes
@@ -730,7 +730,7 @@ func RegisterSwaggerAPI(_ client.Context, rtr *mux.Router) {
 
 // BlockedAddrs returns all the app's module account addresses that are not
 // allowed to receive external tokens.
-func (app *SecretNetworkApp) BlockedAddrs() map[string]bool {
+func (app *ucpiNetworkApp) BlockedAddrs() map[string]bool {
 	blockedAddrs := make(map[string]bool)
 	for acc := range maccPerms {
 		blockedAddrs[authtypes.NewModuleAddress(acc).String()] = !allowedReceivingModAcc[acc]
@@ -739,7 +739,7 @@ func (app *SecretNetworkApp) BlockedAddrs() map[string]bool {
 	return blockedAddrs
 }
 
-func (app *SecretNetworkApp) setupUpgradeHandlers(icamodule *ica.AppModule) {
+func (app *ucpiNetworkApp) setupUpgradeHandlers(icamodule *ica.AppModule) {
 	// this configures a no-op upgrade handler for the v4 upgrade,
 	// which improves the lockup module's store management.
 	app.upgradeKeeper.SetUpgradeHandler(
@@ -747,7 +747,7 @@ func (app *SecretNetworkApp) setupUpgradeHandlers(icamodule *ica.AppModule) {
 			app.mm, icamodule, app.configurator))
 }
 
-func (app *SecretNetworkApp) setupUpgradeStoreLoaders() {
+func (app *ucpiNetworkApp) setupUpgradeStoreLoaders() {
 	upgradeInfo, err := app.upgradeKeeper.ReadUpgradeInfoFromDisk()
 	if err != nil {
 		panic(fmt.Sprintf("Failed to read upgrade info from disk %s", err))
@@ -765,7 +765,7 @@ func (app *SecretNetworkApp) setupUpgradeStoreLoaders() {
 }
 
 // LegacyAmino returns the application's sealed codec.
-func (app *SecretNetworkApp) LegacyAmino() *codec.LegacyAmino {
+func (app *ucpiNetworkApp) LegacyAmino() *codec.LegacyAmino {
 	return app.legacyAmino
 }
 

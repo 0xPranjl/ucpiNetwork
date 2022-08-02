@@ -46,33 +46,33 @@ pub const SIGNING_METHOD: SigningMethod = SigningMethod::MRSIGNER;
 
 lazy_static! {
     pub static ref CONSENSUS_SEED_SEALING_PATH: String = path::Path::new(
-        &env::var(SCRT_SGX_STORAGE_ENV_VAR).unwrap_or_else(|_| DEFAULT_SGX_SECRET_PATH.to_string())
+        &env::var(ucpi_SGX_STORAGE_ENV_VAR).unwrap_or_else(|_| DEFAULT_SGX_ucpi_PATH.to_string())
     )
     .join(NODE_ENCRYPTED_SEED_KEY_FILE)
     .to_str()
-    .unwrap_or(&DEFAULT_SGX_SECRET_PATH.to_string())
+    .unwrap_or(&DEFAULT_SGX_ucpi_PATH.to_string())
     .to_string();
     pub static ref REGISTRATION_KEY_SEALING_PATH: String = path::Path::new(
-        &env::var(SCRT_SGX_STORAGE_ENV_VAR).unwrap_or_else(|_| DEFAULT_SGX_SECRET_PATH.to_string())
+        &env::var(ucpi_SGX_STORAGE_ENV_VAR).unwrap_or_else(|_| DEFAULT_SGX_ucpi_PATH.to_string())
     )
     .join(NODE_EXCHANGE_KEY_FILE)
     .to_str()
-    .unwrap_or(&DEFAULT_SGX_SECRET_PATH.to_string())
+    .unwrap_or(&DEFAULT_SGX_ucpi_PATH.to_string())
     .to_string();
     pub static ref ATTESTATION_CERT_PATH: String = path::Path::new(
-        &env::var(SCRT_SGX_STORAGE_ENV_VAR).unwrap_or_else(|_| DEFAULT_SGX_SECRET_PATH.to_string())
+        &env::var(ucpi_SGX_STORAGE_ENV_VAR).unwrap_or_else(|_| DEFAULT_SGX_ucpi_PATH.to_string())
     )
     .join(ATTESTATION_CERTIFICATE_SAVE_PATH)
     .to_str()
-    .unwrap_or(&DEFAULT_SGX_SECRET_PATH.to_string())
+    .unwrap_or(&DEFAULT_SGX_ucpi_PATH.to_string())
     .to_string();
 }
 
 pub const CONSENSUS_SEED_EXCHANGE_KEYPAIR_DERIVE_ORDER: u32 = 1;
 pub const CONSENSUS_IO_EXCHANGE_KEYPAIR_DERIVE_ORDER: u32 = 2;
 pub const CONSENSUS_STATE_IKM_DERIVE_ORDER: u32 = 3;
-pub const CONSENSUS_CALLBACK_SECRET_DERIVE_ORDER: u32 = 4;
+pub const CONSENSUS_CALLBACK_ucpi_DERIVE_ORDER: u32 = 4;
 
-pub const SCRT_SGX_STORAGE_ENV_VAR: &str = "SCRT_SGX_STORAGE";
+pub const ucpi_SGX_STORAGE_ENV_VAR: &str = "ucpi_SGX_STORAGE";
 
-const DEFAULT_SGX_SECRET_PATH: &str = "/opt/secret/.sgx_secrets/";
+const DEFAULT_SGX_ucpi_PATH: &str = "/opt/ucpi/.sgx_ucpis/";

@@ -91,7 +91,7 @@ pub fn create_attestation_certificate(
 //     // extra_data: &[u8],
 // ) -> sgx_status_t {
 //     let report_data: sgx_report_data_t = sgx_report_data_t::default();
-//     // secret data to be attached with the report.
+//     // ucpi data to be attached with the report.
 //     // if extra_data.len() > REPORT_DATA_SIZE {
 //     //     return sgx_status_t::SGX_ERROR_INVALID_PARAMETER;
 //     // }

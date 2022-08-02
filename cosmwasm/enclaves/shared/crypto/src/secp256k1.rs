@@ -55,18 +55,18 @@ impl VerifyingKey for Secp256k1PubKey {
 
 // TODO: Can we get rid of this comment below?
 
-// use super::keys::SECRET_KEY_SIZE;
+// use super::keys::ucpi_KEY_SIZE;
 // use super::KeyPair;
 // use crate::crypto::CryptoError;
 //
-// use secp256k1::ecdh::SharedSecret;
-// use secp256k1::key::{PublicKey, SecretKey};
+// use secp256k1::ecdh::Shareducpi;
+// use secp256k1::key::{PublicKey, ucpiKey};
 // use secp256k1::{All, Secp256k1};
 //
 // /// PubKey is a public key that is used for ECDSA signing.
 // pub type PubKey = [u8; UNCOMPRESSED_PUBLIC_KEY_SIZE];
 //
-// pub const SECRET_KEY_SIZE: usize = secp256k1::constants::SECRET_KEY_SIZE;
+// pub const ucpi_KEY_SIZE: usize = secp256k1::constants::ucpi_KEY_SIZE;
 // /// The size of uncomressed public keys
 // pub const UNCOMPRESSED_PUBLIC_KEY_SIZE: usize = secp256k1::constants::UNCOMPRESSED_PUBLIC_KEY_SIZE;
 // pub const COMPRESSED_PUBLIC_KEY_SIZE: usize = 33;
@@ -75,7 +75,7 @@ impl VerifyingKey for Secp256k1PubKey {
 // pub struct KeyPair {
 //     context: Secp256k1<All>,
 //     pubkey: PublicKey,
-//     privkey: SecretKey,
+//     privkey: ucpiKey,
 // }
 //
 // impl KeyPair {
@@ -86,10 +86,10 @@ impl VerifyingKey for Secp256k1PubKey {
 //         // So if the Resulting public key is bad we need to generate a new random private key and try again until it succeeds.
 //         loop {
 //             let context = Secp256k1::new();
-//             let mut sk_slice = [0; SECRET_KEY_SIZE];
+//             let mut sk_slice = [0; ucpi_KEY_SIZE];
 //             rand_slice(&mut sk_slice)?;
-//             if let Ok(privkey) = SecretKey::from_slice(&sk_slice) {
-//                 let pubkey = PublicKey::from_secret_key(&context, &privkey);
+//             if let Ok(privkey) = ucpiKey::from_slice(&sk_slice) {
+//                 let pubkey = PublicKey::from_ucpi_key(&context, &privkey);
 //                 return Ok(KeyPair {
 //                     context,
 //                     privkey,
@@ -103,11 +103,11 @@ impl VerifyingKey for Secp256k1PubKey {
 //     /// Please don't use it to generate a new key, if you want a new key use `KeyPair::new()`
 //     /// Because `KeyPair::new()` will make sure it uses a good random source and will loop private keys until it's a good key.
 //     /// (and it's best to isolate the generation of keys to one place)
-//     pub fn new_from_slice(privkey: &[u8; SECRET_KEY_SIZE]) -> Result<Self, CryptoError> {
+//     pub fn new_from_slice(privkey: &[u8; ucpi_KEY_SIZE]) -> Result<Self, CryptoError> {
 //         let context = Secp256k1::new();
 //
-//         let privkey = SecretKey::from_slice(privkey).map_err(|e| CryptoError::KeyError {})?;
-//         let pubkey = PublicKey::from_secret_key(&context, &privkey);
+//         let privkey = ucpiKey::from_slice(privkey).map_err(|e| CryptoError::KeyError {})?;
+//         let pubkey = PublicKey::from_ucpi_key(&context, &privkey);
 //
 //         Ok(KeyPair {
 //             context,
@@ -134,13 +134,13 @@ impl VerifyingKey for Secp256k1PubKey {
 //             "Derive key public: {:?}",
 //             &pubkey.serialize_uncompressed().to_vec().as_slice()
 //         );
-//         // SharedSecret::
+//         // Shareducpi::
 //         info!("Derive key private: {:?}", &self.privkey);
-//         let shared = SharedSecret::new(&pubkey, &self.privkey);
+//         let shared = Shareducpi::new(&pubkey, &self.privkey);
 //
 //         if shared.len() != SYMMETRIC_KEY_SIZE {
 //             error!(
-//                 "Error creating shared secret. Size mismatch {:?}",
+//                 "Error creating shared ucpi. Size mismatch {:?}",
 //                 shared.len()
 //             );
 //             return Err(CryptoError::KeyError {});

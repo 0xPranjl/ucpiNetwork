@@ -7,9 +7,9 @@ import (
 	"testing"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	eng "github.com/enigmampc/SecretNetwork/types"
-	"github.com/enigmampc/SecretNetwork/x/registration/internal/types"
-	ra "github.com/enigmampc/SecretNetwork/x/registration/remote_attestation"
+	eng "github.com/enigmampc/ucpiNetwork/types"
+	"github.com/enigmampc/ucpiNetwork/x/registration/internal/types"
+	ra "github.com/enigmampc/ucpiNetwork/x/registration/remote_attestation"
 	"github.com/stretchr/testify/require"
 )
 
@@ -30,9 +30,9 @@ func TestNewKeeper(t *testing.T) {
 func TestNewKeeper_Node(t *testing.T) {
 	tempDir := t.TempDir()
 
-	seedPath := filepath.Join(tempDir, types.SecretNodeCfgFolder, types.SecretNodeSeedConfig)
+	seedPath := filepath.Join(tempDir, types.ucpiNodeCfgFolder, types.ucpiNodeSeedConfig)
 
-	err := os.MkdirAll(filepath.Join(tempDir, types.SecretNodeCfgFolder), 0o700)
+	err := os.MkdirAll(filepath.Join(tempDir, types.ucpiNodeCfgFolder), 0o700)
 	require.NoError(t, err)
 
 	err = ioutil.WriteFile(seedPath, CreateTestSeedConfig(t), 0o700)

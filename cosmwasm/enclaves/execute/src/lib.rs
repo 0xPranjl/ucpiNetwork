@@ -51,7 +51,7 @@ fn log_level_from_str(env_log_level: &str) -> Option<LevelFilter> {
 fn set_log_level_or_default(default: LevelFilter, max_level: LevelFilter) {
     if default > max_level {
         panic!(
-            "Logging configuration is broken, stopping to prevent secret leaking. default: {:?}, max level: {:?}",
+            "Logging configuration is broken, stopping to prevent ucpi leaking. default: {:?}, max level: {:?}",
             default, max_level
         );
     }
@@ -61,7 +61,7 @@ fn set_log_level_or_default(default: LevelFilter, max_level: LevelFilter) {
     if let Some(env_log_level) =
         log_level_from_str(&env::var(LOG_LEVEL_ENV_VAR).unwrap_or_default())
     {
-        // We want to make sure log level is not higher than WARN in production to prevent accidental secret leakage
+        // We want to make sure log level is not higher than WARN in production to prevent accidental ucpi leakage
         if env_log_level <= max_level {
             log_level = env_log_level;
         }

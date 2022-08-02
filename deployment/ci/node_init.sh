@@ -3,54 +3,54 @@
 set -euvo pipefail
 
 # init the node
-# rm -rf ~/.secret*
-#secretcli config chain-id enigma-testnet
-#secretcli config output json
-#secretcli config indent true
-#secretcli config trust-node true
-#secretcli config keyring-backend test
-rm -rf ~/.secretd
+# rm -rf ~/.ucpi*
+#ucpicli config chain-id enigma-testnet
+#ucpicli config output json
+#ucpicli config indent true
+#ucpicli config trust-node true
+#ucpicli config keyring-backend test
+rm -rf ~/.ucpid
 
-mkdir -p /root/.secretd/.node
-secretd config keyring-backend test
-secretd config node tcp://bootstrap:26657
-secretd config chain-id secretdev-1
+mkdir -p /root/.ucpid/.node
+ucpid config keyring-backend test
+ucpid config node tcp://bootstrap:26657
+ucpid config chain-id ucpidev-1
 
-secretd init "$(hostname)" --chain-id secretdev-1 || true
+ucpid init "$(hostname)" --chain-id ucpidev-1 || true
 
 PERSISTENT_PEERS="115aa0a629f5d70dd1d464bc7e42799e00f4edae@bootstrap:26656"
 
-sed -i 's/persistent_peers = ""/persistent_peers = "'$PERSISTENT_PEERS'"/g' ~/.secretd/config/config.toml
+sed -i 's/persistent_peers = ""/persistent_peers = "'$PERSISTENT_PEERS'"/g' ~/.ucpid/config/config.toml
 echo "Set persistent_peers: $PERSISTENT_PEERS"
 
 echo "Waiting for bootstrap to start..."
 sleep 20
 
-cp /tmp/.secretd/keyring-test /root/.secretd/ -r
+cp /tmp/.ucpid/keyring-test /root/.ucpid/ -r
 
-secretd init-enclave
+ucpid init-enclave
 
-PUBLIC_KEY=$(secretd parse /opt/secret/.sgx_secrets/attestation_cert.der 2> /dev/null | cut -c 3- )
+PUBLIC_KEY=$(ucpid parse /opt/ucpi/.sgx_ucpis/attestation_cert.der 2> /dev/null | cut -c 3- )
 
-echo "Public key: $(secretd parse /opt/secret/.sgx_secrets/attestation_cert.der 2> /dev/null | cut -c 3- )"
+echo "Public key: $(ucpid parse /opt/ucpi/.sgx_ucpis/attestation_cert.der 2> /dev/null | cut -c 3- )"
 
-secretd tx register auth /opt/secret/.sgx_secrets/attestation_cert.der -y --from a --gas-prices 0.25uscrt
+ucpid tx register auth /opt/ucpi/.sgx_ucpis/attestation_cert.der -y --from a --gas-prices 0.25uucpi
 
 sleep 10
 
-SEED=$(secretd q register seed "$PUBLIC_KEY" 2> /dev/null | cut -c 3-)
+SEED=$(ucpid q register seed "$PUBLIC_KEY" 2> /dev/null | cut -c 3-)
 echo "SEED: $SEED"
 
-secretd q register secret-network-params 2> /dev/null
+ucpid q register ucpi-network-params 2> /dev/null
 
-secretd configure-secret node-master-cert.der "$SEED"
+ucpid configure-ucpi node-master-cert.der "$SEED"
 
-cp /tmp/.secretd/config/genesis.json /root/.secretd/config/genesis.json
+cp /tmp/.ucpid/config/genesis.json /root/.ucpid/config/genesis.json
 
-secretd validate-genesis
+ucpid validate-genesis
 
-secretd config node tcp://localhost:26657
+ucpid config node tcp://localhost:26657
 
-RUST_BACKTRACE=1 secretd start &
+RUST_BACKTRACE=1 ucpid start &
 
 ./wasmi-sgx-test.sh

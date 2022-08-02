@@ -7,7 +7,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	sdktxsigning "github.com/cosmos/cosmos-sdk/types/tx/signing"
-	wasmTypes "github.com/enigmampc/SecretNetwork/go-cosmwasm/types"
+	wasmTypes "github.com/enigmampc/ucpiNetwork/go-cosmwasm/types"
 	"github.com/spf13/cast"
 )
 
@@ -244,19 +244,19 @@ func DefaultWasmConfig() *WasmConfig {
 	}
 }
 
-type SecretMsg struct {
+type ucpiMsg struct {
 	CodeHash []byte
 	Msg      []byte
 }
 
-func NewSecretMsg(codeHash []byte, msg []byte) SecretMsg {
-	return SecretMsg{
+func NewucpiMsg(codeHash []byte, msg []byte) ucpiMsg {
+	return ucpiMsg{
 		CodeHash: codeHash,
 		Msg:      msg,
 	}
 }
 
-func (m SecretMsg) Serialize() []byte {
+func (m ucpiMsg) Serialize() []byte {
 	return append(m.CodeHash, m.Msg...)
 }
 

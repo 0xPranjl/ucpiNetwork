@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: Secret Network - gRPC Gateway docs
+  title: ucpi Network - gRPC Gateway docs
   description: A REST interface for queries and transactions
   version: v1.3.1
 paths:
@@ -6330,9 +6330,9 @@ paths:
                         type: string
                       withdraw_addr_enabled:
                         type: boolean
-                      secret_foundation_tax:
+                      ucpi_foundation_tax:
                         type: string
-                      secret_foundation_address:
+                      ucpi_foundation_address:
                         type: string
                 description: QueryParamsResponse is the response type for the Query/Params RPC
                   method.
@@ -27145,7 +27145,7 @@ paths:
       description: Information about the connected node
       summary: The properties of the connected node
       tags:
-        - Secret REST
+        - ucpi REST
       responses:
         "200":
           description: Node status
@@ -38493,9 +38493,9 @@ components:
           type: string
         withdraw_addr_enabled:
           type: boolean
-        secret_foundation_tax:
+        ucpi_foundation_tax:
           type: string
-        secret_foundation_address:
+        ucpi_foundation_address:
           type: string
       description: Params defines the set of params for the distribution module.
     cosmos.distribution.v1beta1.QueryCommunityPoolResponse:
@@ -38643,9 +38643,9 @@ components:
               type: string
             withdraw_addr_enabled:
               type: boolean
-            secret_foundation_tax:
+            ucpi_foundation_tax:
               type: string
-            secret_foundation_address:
+            ucpi_foundation_address:
               type: string
       description: QueryParamsResponse is the response type for the Query/Params RPC method.
     cosmos.distribution.v1beta1.QueryValidatorCommissionResponse:
@@ -48348,7 +48348,7 @@ components:
         in
 
         the connection handshake.
-    secret.compute.v1beta1.AbsoluteTxPosition:
+    ucpi.compute.v1beta1.AbsoluteTxPosition:
       type: object
       properties:
         block_height:
@@ -48361,7 +48361,7 @@ components:
           title: TxIndex is a monotonic counter within the block (actual transaction
             index, or gas consumed)
       title: AbsoluteTxPosition can be used to sort contracts
-    secret.compute.v1beta1.CodeInfoResponse:
+    ucpi.compute.v1beta1.CodeInfoResponse:
       type: object
       properties:
         code_id:
@@ -48377,7 +48377,7 @@ components:
           type: string
         builder:
           type: string
-    secret.compute.v1beta1.ContractInfo:
+    ucpi.compute.v1beta1.ContractInfo:
       type: object
       properties:
         code_id:
@@ -48406,7 +48406,7 @@ components:
               title: TxIndex is a monotonic counter within the block (actual transaction
                 index, or gas consumed)
       title: ContractInfo stores a WASM contract instance
-    secret.compute.v1beta1.ContractInfoWithAddress:
+    ucpi.compute.v1beta1.ContractInfoWithAddress:
       type: object
       properties:
         address:
@@ -48443,7 +48443,7 @@ components:
           title: ContractInfo stores a WASM contract instance
       title: ContractInfoWithAddress adds the address (key) to the ContractInfo
         representation
-    secret.compute.v1beta1.QueryCodeResponse:
+    ucpi.compute.v1beta1.QueryCodeResponse:
       type: object
       properties:
         code_info:
@@ -48465,7 +48465,7 @@ components:
         data:
           type: string
           format: byte
-    secret.compute.v1beta1.QueryCodesResponse:
+    ucpi.compute.v1beta1.QueryCodesResponse:
       type: object
       properties:
         code_infos:
@@ -48486,7 +48486,7 @@ components:
                 type: string
               builder:
                 type: string
-    secret.compute.v1beta1.QueryContractInfoResponse:
+    ucpi.compute.v1beta1.QueryContractInfoResponse:
       type: object
       properties:
         address:
@@ -48524,7 +48524,7 @@ components:
           title: ContractInfo stores a WASM contract instance
       title: QueryContractInfoResponse is the response type for the Query/ContractInfo
         RPC method
-    secret.compute.v1beta1.QueryContractsByCodeResponse:
+    ucpi.compute.v1beta1.QueryContractsByCodeResponse:
       type: object
       properties:
         contract_infos:
@@ -48567,26 +48567,26 @@ components:
                 title: ContractInfo stores a WASM contract instance
             title: ContractInfoWithAddress adds the address (key) to the ContractInfo
               representation
-    secret.compute.v1beta1.QuerySmartContractStateResponse:
+    ucpi.compute.v1beta1.QuerySmartContractStateResponse:
       type: object
       properties:
         data:
           type: string
           format: byte
-    secret.intertx.v1beta1.QueryInterchainAccountFromAddressResponse:
+    ucpi.intertx.v1beta1.QueryInterchainAccountFromAddressResponse:
       type: object
       properties:
         interchain_account_address:
           type: string
       title: QueryInterchainAccountFromAddressResponse the response type for the
         Query/InterchainAccountAddress RPC
-    secret.registration.v1beta1.Key:
+    ucpi.registration.v1beta1.Key:
       type: object
       properties:
         key:
           type: string
           format: byte
-    secret.registration.v1beta1.QueryEncryptedSeedResponse:
+    ucpi.registration.v1beta1.QueryEncryptedSeedResponse:
       type: object
       properties:
         encrypted_seed:

@@ -20,7 +20,7 @@ pub enum CryptoError {
     /// The public key can't be recovered from a message & signature.
     RecoveryError,
     /// A key wasn't valid.
-    /// e.g. PrivateKey, PublicKey, SharedSecret.
+    /// e.g. PrivateKey, PublicKey, Shareducpi.
     KeyError,
     /// The random function had failed generating randomness
     RandomError,

@@ -47,8 +47,8 @@ extern "C" {
 
 pub const IAS_REPORT_CA: &[u8] = include_bytes!("../../Intel_SGX_Attestation_RootCA.pem");
 
-const ISSUER: &str = "SecretTEE";
-const SUBJECT: &str = "Secret Network Node Certificate";
+const ISSUER: &str = "ucpiTEE";
+const SUBJECT: &str = "ucpi Network Node Certificate";
 
 pub enum Error {
     GenericError,

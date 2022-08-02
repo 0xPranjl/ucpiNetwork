@@ -20,8 +20,8 @@ import (
 	crypto "github.com/cosmos/cosmos-sdk/crypto/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	cosmwasm "github.com/enigmampc/SecretNetwork/go-cosmwasm/types"
-	"github.com/enigmampc/SecretNetwork/x/compute/internal/types"
+	cosmwasm "github.com/enigmampc/ucpiNetwork/go-cosmwasm/types"
+	"github.com/enigmampc/ucpiNetwork/x/compute/internal/types"
 )
 
 type ContractEvent []cosmwasm.LogAttribute
@@ -39,7 +39,7 @@ func testEncrypt(t *testing.T, keeper Keeper, ctx sdk.Context, contractAddress s
 		return nil, cosmwasm.StdError{}
 	}
 
-	intMsg := types.SecretMsg{
+	intMsg := types.ucpiMsg{
 		CodeHash: []byte(hex.EncodeToString(hash)),
 		Msg:      msg,
 	}
@@ -262,7 +262,7 @@ func queryHelperImpl(
 ) (string, cosmwasm.StdError) {
 	hashStr := hex.EncodeToString(keeper.GetContractHash(ctx, contractAddr))
 
-	msg := types.SecretMsg{
+	msg := types.ucpiMsg{
 		CodeHash: []byte(hashStr),
 		Msg:      []byte(input),
 	}
@@ -319,7 +319,7 @@ func execHelperImpl(
 ) ([]byte, []ContractEvent, uint64, cosmwasm.StdError) {
 	hashStr := hex.EncodeToString(keeper.GetContractHash(ctx, contractAddress))
 
-	msg := types.SecretMsg{
+	msg := types.ucpiMsg{
 		CodeHash: []byte(hashStr),
 		Msg:      []byte(execMsg),
 	}
@@ -383,7 +383,7 @@ func initHelperImpl(
 ) (sdk.AccAddress, []ContractEvent, cosmwasm.StdError) {
 	hashStr := hex.EncodeToString(keeper.GetCodeInfo(ctx, codeID).CodeHash)
 
-	msg := types.SecretMsg{
+	msg := types.ucpiMsg{
 		CodeHash: []byte(hashStr),
 		Msg:      []byte(initMsg),
 	}
@@ -1279,7 +1279,7 @@ func TestExternalQueryCalleeDoesntExist(t *testing.T) {
 	addr, _, err := initHelper(t, keeper, ctx, codeID, walletA, privKeyA, `{"nop":{}}`, true, defaultGasForTests)
 	require.Empty(t, err)
 
-	_, _, _, err = execHelper(t, keeper, ctx, addr, walletA, privKeyA, `{"send_external_query_error":{"to":"secret13l72vhjngmg55ykajxdnlalktwglyqjqv9pkq4","code_hash":"bla bla"}}`, true, defaultGasForTests, 0)
+	_, _, _, err = execHelper(t, keeper, ctx, addr, walletA, privKeyA, `{"send_external_query_error":{"to":"ucpi13l72vhjngmg55ykajxdnlalktwglyqjqv9pkq4","code_hash":"bla bla"}}`, true, defaultGasForTests, 0)
 
 	require.NotNil(t, err.GenericErr)
 	require.Contains(t, err.GenericErr.Msg, "not found")

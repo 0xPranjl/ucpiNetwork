@@ -19,7 +19,7 @@ package types
 //// KVStore return new gas KVStore which fixed
 //// https://github.com/cosmos/cosmos-sdk/issues/10243
 //func KVStore(ctx sdk.Context, key sdk.StoreKey) types.KVStore {
-//	//if (ctx.ChainID() == "secret-4" && ctx.BlockHeight() < 7_800_000) ||
+//	//if (ctx.ChainID() == "ucpi-4" && ctx.BlockHeight() < 7_800_000) ||
 //	//	(ctx.ChainID() == "pulsar-2" && ctx.BlockHeight() < 6_470_000) {
 //	//	return gaskv.NewStore(ctx.MultiStore().GetKVStore(key), ctx.GasMeter(), stypes.KVGasConfig())
 //	//}

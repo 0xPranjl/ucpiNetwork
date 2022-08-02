@@ -64,7 +64,7 @@
       "metadata": {
         "description": "The base URI where artifacts required by this template are located. When the template is deployed using the accompanying scripts, a private location in the subscription will be used and this value will be automatically generated."
       },
-      "defaultValue": "https://raw.githubusercontent.com/enigmampc/SecretNetwork/master/deployment/azure/secret-node-azure-template/"
+      "defaultValue": "https://raw.githubusercontent.com/enigmampc/ucpiNetwork/master/deployment/azure/ucpi-node-azure-template/"
     },
     "_artifactsLocationSasToken": {
       "type": "securestring",
@@ -149,7 +149,7 @@
             }
           },
           {
-            "name": "secret-network-rpc",
+            "name": "ucpi-network-rpc",
             "properties": {
               "protocol": "TCP",
               "sourcePortRange": "*",
@@ -315,11 +315,11 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-            "[uri(parameters('_artifactsLocation'), concat('scripts/secretnode.sh', parameters('_artifactsLocationSasToken')))]"
+            "[uri(parameters('_artifactsLocation'), concat('scripts/ucpinode.sh', parameters('_artifactsLocationSasToken')))]"
           ]
         },
         "protectedSettings": {
-          "commandToExecute": "[concat('sh secretnode.sh',' ',parameters('adminUsername'),' ',parameters('chainId'),' ',parameters('moniker'),' ',parameters('persistentPeers'),' ',parameters('rpcUrl'),' ',parameters('registrationService'))]"
+          "commandToExecute": "[concat('sh ucpinode.sh',' ',parameters('adminUsername'),' ',parameters('chainId'),' ',parameters('moniker'),' ',parameters('persistentPeers'),' ',parameters('rpcUrl'),' ',parameters('registrationService'))]"
         }
       }
     }

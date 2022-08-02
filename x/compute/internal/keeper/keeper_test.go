@@ -15,11 +15,11 @@ import (
 	stypes "github.com/cosmos/cosmos-sdk/store/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authante "github.com/cosmos/cosmos-sdk/x/auth/ante"
-	"github.com/enigmampc/SecretNetwork/go-cosmwasm/api"
-	eng "github.com/enigmampc/SecretNetwork/types"
-	wasmUtils "github.com/enigmampc/SecretNetwork/x/compute/client/utils"
-	"github.com/enigmampc/SecretNetwork/x/compute/internal/types"
-	reg "github.com/enigmampc/SecretNetwork/x/registration"
+	"github.com/enigmampc/ucpiNetwork/go-cosmwasm/api"
+	eng "github.com/enigmampc/ucpiNetwork/types"
+	wasmUtils "github.com/enigmampc/ucpiNetwork/x/compute/client/utils"
+	"github.com/enigmampc/ucpiNetwork/x/compute/internal/types"
+	reg "github.com/enigmampc/ucpiNetwork/x/registration"
 )
 
 const SupportedFeatures = "staking"
@@ -297,7 +297,7 @@ func TestInstantiate(t *testing.T) {
 	wasmCode, err := ioutil.ReadFile("./testdata/contract.wasm")
 	require.NoError(t, err)
 
-	contractID, err := keeper.Create(ctx, creator, wasmCode, "https://github.com/enigmampc/SecretNetwork/blob/master/cosmwasm/contracts/hackatom/src/contract.rs", "")
+	contractID, err := keeper.Create(ctx, creator, wasmCode, "https://github.com/enigmampc/ucpiNetwork/blob/master/cosmwasm/contracts/hackatom/src/contract.rs", "")
 	require.NoError(t, err)
 
 	_, _, bob := keyPubAddr()
@@ -312,7 +312,7 @@ func TestInstantiate(t *testing.T) {
 
 	key := keeper.GetCodeInfo(ctx, contractID).CodeHash
 
-	msg := types.SecretMsg{
+	msg := types.ucpiMsg{
 		CodeHash: []byte(hex.EncodeToString(key)),
 		Msg:      initMsgBz,
 	}
@@ -343,7 +343,7 @@ func TestInstantiate(t *testing.T) {
 	// create with no balance is also legal
 	contractAddr, err := keeper.Instantiate(ctx, contractID, creator /* , nil */, initMsgBz, "demo contract 1", nil, nil)
 	require.NoError(t, err)
-	require.Equal(t, "secret18vd8fpwxzck93qlwghaj6arh4p7c5n8978vsyg", contractAddr.String())
+	require.Equal(t, "ucpi18vd8fpwxzck93qlwghaj6arh4p7c5n8978vsyg", contractAddr.String())
 
 	gasAfter := ctx.GasMeter().GasConsumed()
 	require.Greater(t, gasAfter-gasBefore, uint64(10000))
@@ -558,7 +558,7 @@ func TestExecute(t *testing.T) {
 	key := keeper.GetCodeInfo(ctx, contractID).CodeHash
 	// keyStr := hex.EncodeToString(key)
 
-	msg := types.SecretMsg{
+	msg := types.ucpiMsg{
 		CodeHash: []byte(hex.EncodeToString(key)),
 		Msg:      initMsgBz,
 	}
@@ -574,7 +574,7 @@ func TestExecute(t *testing.T) {
 
 	require.NoError(t, err)
 
-	require.Equal(t, "secret18vd8fpwxzck93qlwghaj6arh4p7c5n8978vsyg", addr.String())
+	require.Equal(t, "ucpi18vd8fpwxzck93qlwghaj6arh4p7c5n8978vsyg", addr.String())
 
 	// ensure bob doesn't exist
 	bobAcct := accKeeper.GetAccount(ctx, bob)
@@ -614,7 +614,7 @@ func TestExecute(t *testing.T) {
 	key = keeper.GetCodeInfo(ctx, contractID).CodeHash
 	// keyStr := hex.EncodeToString(key)
 
-	msg = types.SecretMsg{
+	msg = types.ucpiMsg{
 		CodeHash: []byte(hex.EncodeToString(key)),
 		Msg:      initMsgBz,
 	}
@@ -827,7 +827,7 @@ func TestExecuteWithCpuLoop(t *testing.T) {
 
 	hash := keeper.GetCodeInfo(ctx, contractID).CodeHash
 
-	msg := types.SecretMsg{
+	msg := types.ucpiMsg{
 		CodeHash: []byte(hex.EncodeToString(hash)),
 		Msg:      initMsgBz,
 	}
@@ -864,7 +864,7 @@ func TestExecuteWithCpuLoop(t *testing.T) {
 	codeHash := keeper.GetContractHash(ctx, addr)
 	codeHashStr := hex.EncodeToString(codeHash)
 
-	msg2 := types.SecretMsg{
+	msg2 := types.ucpiMsg{
 		CodeHash: []byte(codeHashStr),
 		Msg:      []byte(`{"cpu_loop":{}}`),
 	}
@@ -945,7 +945,7 @@ func TestExecuteWithStorageLoop(t *testing.T) {
 	codeHash := keeper.GetContractHash(ctx, addr)
 	codeHashStr := hex.EncodeToString(codeHash)
 
-	msg := types.SecretMsg{
+	msg := types.ucpiMsg{
 		CodeHash: []byte(codeHashStr),
 		Msg:      []byte(`{"storage_loop":{}}`),
 	}
@@ -976,7 +976,7 @@ func TestExecuteWithStorageLoop(t *testing.T) {
 
 /*
 func TestMigrate(t *testing.T) {
-	t.SkipNow() // secret network does not support migrate
+	t.SkipNow() // ucpi network does not support migrate
 	tempDir, err := ioutil.TempDir("", "wasm")
 	require.NoError(t, err)
 	defer os.RemoveAll(tempDir)
@@ -1123,7 +1123,7 @@ func TestMigrate(t *testing.T) {
 }
 
 func TestMigrateWithDispatchedMessage(t *testing.T) {
-	t.SkipNow() // secret network does not support migrate
+	t.SkipNow() // ucpi network does not support migrate
 	tempDir, err := ioutil.TempDir("", "wasm")
 	require.NoError(t, err)
 	defer os.RemoveAll(tempDir)
@@ -1240,7 +1240,7 @@ func mustMarshal(t *testing.T, r interface{}) []byte {
 
 /*
 func TestUpdateContractAdmin(t *testing.T) {
-	t.SkipNow() // secret network does not support migrate
+	t.SkipNow() // ucpi network does not support migrate
 	tempDir, err := ioutil.TempDir("", "wasm")
 	require.NoError(t, err)
 	defer os.RemoveAll(tempDir)

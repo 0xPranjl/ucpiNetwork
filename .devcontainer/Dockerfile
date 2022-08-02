@@ -156,16 +156,16 @@ RUN echo -e 'no\n/opt' | ./sgx/sgx_linux_x64_sdk_${SGX_VERSION}.bin && \
 
 # ENV LD_LIBRARY_PATH=/opt/sgxsdk/libsgx-enclave-common/
 
-RUN echo 'export SCRT_ENCLAVE_DIR=/home/vscode/SecretNetwork/go-cosmwasm/' >> /etc/bash.bashrc
+RUN echo 'export ucpi_ENCLAVE_DIR=/home/vscode/ucpiNetwork/go-cosmwasm/' >> /etc/bash.bashrc
 
 USER $USERNAME
 
 WORKDIR ${USER_HOME}
 
 RUN cargo install xargo --version 0.3.25
-RUN git clone https://github.com/scrtlabs/SecretNetwork.git
+RUN git clone https://github.com/ucpilabs/ucpiNetwork.git
 
-WORKDIR ${USER_HOME}/SecretNetwork
+WORKDIR ${USER_HOME}/ucpiNetwork
 
 # USER root
 # get rust

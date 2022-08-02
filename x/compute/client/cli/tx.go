@@ -9,13 +9,13 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/client/tx"
 
-	"github.com/enigmampc/SecretNetwork/x/compute/internal/keeper"
+	"github.com/enigmampc/ucpiNetwork/x/compute/internal/keeper"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	wasmUtils "github.com/enigmampc/SecretNetwork/x/compute/client/utils"
-	"github.com/enigmampc/SecretNetwork/x/compute/internal/types"
+	wasmUtils "github.com/enigmampc/ucpiNetwork/x/compute/client/utils"
+	"github.com/enigmampc/ucpiNetwork/x/compute/internal/types"
 	"github.com/spf13/cobra"
 	flag "github.com/spf13/pflag"
 )
@@ -164,7 +164,7 @@ func InstantiateContractCmd() *cobra.Command {
 
 	cmd.Flags().String(flagCodeHash, "", "For offline transactions, use this to specify the target contract's code hash")
 	cmd.Flags().String(flagIoMasterKey, "", "For offline transactions, use this to specify the path to the "+
-		"io-master-cert.der file, which you can get using the command `secretcli q register secret-network-params` ")
+		"io-master-cert.der file, which you can get using the command `ucpicli q register ucpi-network-params` ")
 	cmd.Flags().String(flagAmount, "", "Coins to send to the contract during instantiation")
 	cmd.Flags().String(flagLabel, "", "A human-readable name for this contract in lists")
 	// cmd.Flags().String(flagAdmin, "", "Address of an admin")
@@ -195,7 +195,7 @@ func parseInstantiateArgs(args []string, cliCtx client.Context, initFlags *flag.
 	}
 
 	wasmCtx := wasmUtils.WASMContext{CLIContext: cliCtx}
-	initMsg := types.SecretMsg{}
+	initMsg := types.ucpiMsg{}
 
 	var encryptedMsg []byte
 	genOnly, err := initFlags.GetBool(flags.FlagGenerateOnly)
@@ -333,7 +333,7 @@ func ExecuteContractCmd() *cobra.Command {
 
 	cmd.Flags().String(flagCodeHash, "", "For offline transactions, use this to specify the target contract's code hash")
 	cmd.Flags().String(flagIoMasterKey, "", "For offline transactions, use this to specify the path to the "+
-		"io-master-cert.der file, which you can get using the command `secretcli q register secret-network-params` ")
+		"io-master-cert.der file, which you can get using the command `ucpicli q register ucpi-network-params` ")
 	cmd.Flags().String(flagAmount, "", "Coins to send to the contract along with command")
 	cmd.Flags().String(flagLabel, "", "A human-readable name for this contract in lists")
 	flags.AddTxFlagsToCmd(cmd)
@@ -342,7 +342,7 @@ func ExecuteContractCmd() *cobra.Command {
 
 func ExecuteWithData(cmd *cobra.Command, contractAddress sdk.AccAddress, msg []byte, amount string, genOnly bool, ioMasterKeyPath string, codeHash string, cliCtx client.Context) error {
 	wasmCtx := wasmUtils.WASMContext{CLIContext: cliCtx}
-	execMsg := types.SecretMsg{}
+	execMsg := types.ucpiMsg{}
 
 	execMsg.Msg = msg
 

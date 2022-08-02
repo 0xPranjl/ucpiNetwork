@@ -1,6 +1,6 @@
 use crate::ed25519::Ed25519PrivateKey;
 use crate::traits::SealedKey;
-use crate::{AESKey, KeyPair, Seed, SECRET_KEY_SIZE};
+use crate::{AESKey, KeyPair, Seed, ucpi_KEY_SIZE};
 use enclave_ffi_types::EnclaveError;
 use log::*;
 use std::io::{Read, Write};
@@ -60,10 +60,10 @@ fn open(filepath: &str) -> Result<Ed25519PrivateKey, EnclaveError> {
         .read(buf.as_mut())
         .map_err(|_err| EnclaveError::FailedUnseal)?;
 
-    if n < SECRET_KEY_SIZE {
+    if n < ucpi_KEY_SIZE {
         error!(
-            "[Enclave] Dramatic read from {} ended prematurely (n = {} < SECRET_KEY_SIZE = {})",
-            filepath, n, SECRET_KEY_SIZE
+            "[Enclave] Dramatic read from {} ended prematurely (n = {} < ucpi_KEY_SIZE = {})",
+            filepath, n, ucpi_KEY_SIZE
         );
         return Err(EnclaveError::FailedUnseal);
     }

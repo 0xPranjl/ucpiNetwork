@@ -4,7 +4,7 @@ const exec = require("child_process").exec;
 
 const FAUCET_WALLET_NAME = process.env.FAUCET_WALLET_NAME || "a";
 const FAUCET_AMOUNT = process.env.FAUCET_AMOUNT || "1000000000";
-const DENOM = process.env.DENOM || "uscrt";
+const DENOM = process.env.DENOM || "uucpi";
 
 let faucet_address;
 
@@ -32,13 +32,13 @@ function execShellCommand(cmd) {
 /**
  * Command to send coins.
  * @param src_key_name source account key name, default 'a'
- * @param src_address  source account's secret address
+ * @param src_address  source account's ucpi address
  * @param dest_address destination address
  * @param amount amount to send
  * @returns result of executing the command.
  */
 async function send_command(src_key_name, src_address, dest_address, amount) {
-  const send_message = `secretd tx bank send ${src_address} ${dest_address} ${amount}${DENOM} --from ${src_key_name} --gas-prices 0.25uscrt -y`;
+  const send_message = `ucpid tx bank send ${src_address} ${dest_address} ${amount}${DENOM} --from ${src_key_name} --gas-prices 0.25uucpi -y`;
   console.log(`send_message: \n ${send_message}`);
 
   const result = await execShellCommand(send_message);
@@ -57,7 +57,7 @@ async function get_address(key_name) {
     return faucet_address;
   }
 
-  const list_keys = "secretd keys list";
+  const list_keys = "ucpid keys list";
   const result = await execShellCommand(list_keys);
 
   for (index in result) {
@@ -152,4 +152,4 @@ server.on("request", async (req, res) => {
 
 server.listen(5000);
 
-console.log("Secret Faucet is running on port 5000 ...");
+console.log("ucpi Faucet is running on port 5000 ...");

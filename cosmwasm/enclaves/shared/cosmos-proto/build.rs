@@ -82,7 +82,7 @@ mod protobuf {
             ),
             (
                 "src/cosmwasm",
-                &[from_base("proto/secret/compute/v1beta1/msg.proto")],
+                &[from_base("proto/ucpi/compute/v1beta1/msg.proto")],
             ),
         ];
 

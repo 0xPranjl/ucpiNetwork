@@ -129,7 +129,7 @@ pub enum EnclaveError {
     FailedSeal,
     #[display(fmt = "failed to unseal data")]
     FailedUnseal,
-    #[display(fmt = "failed to authenticate secret contract")]
+    #[display(fmt = "failed to authenticate ucpi contract")]
     FailedContractAuthentication,
     #[display(fmt = "failed to deserialize data")]
     FailedToDeserialize,
@@ -246,7 +246,7 @@ impl Default for HealthCheckResult {
 // into the enclave, and then finally unwrap the `VmError`, which gets propagated up the normal stack.
 //
 // For a more detailed discussion, see:
-// https://github.com/enigmampc/SecretNetwork/pull/307#issuecomment-651157410
+// https://github.com/enigmampc/ucpiNetwork/pull/307#issuecomment-651157410
 #[repr(C)]
 #[derive(Debug, Display)]
 #[display(fmt = "VmError")]

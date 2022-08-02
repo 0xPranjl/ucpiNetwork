@@ -62,9 +62,9 @@ be done simply by running `cargo check` or `cargo unit-test`
 ## Using your project
 
 Once you have your custom repo, you should check out
-[Developing](https://build.scrt.network/dev/tutorials.html) to explain more on how to run tests and develop
+[Developing](https://build.ucpi.network/dev/tutorials.html) to explain more on how to run tests and develop
 code. Or go through the
-[online tutorial](https://learn.figment.io/network-documentation/secret) to get a
+[online tutorial](https://learn.figment.io/network-documentation/ucpi) to get a
 better feel of how to develop.
 
 [Publishing](./Publishing.md) contains useful information on how to publish your

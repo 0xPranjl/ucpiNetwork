@@ -9107,7 +9107,7 @@
                     u = e.password,
                     l = e.passwordType,
                     c = e.clientId,
-                    f = e.clientSecret,
+                    f = e.clientucpi,
                     p = {
                         grant_type: "password",
                         scope: e.scopes.join(" ")
@@ -9118,7 +9118,7 @@
                     username: a
                 }, {
                     password: u
-                }), "query" === l ? (c && (d.client_id = c), f && (d.client_secret = f)) : h.Authorization = "Basic " + (0, s.btoa)(c + ":" + f)), n.authorizeRequest({
+                }), "query" === l ? (c && (d.client_id = c), f && (d.client_ucpi = f)) : h.Authorization = "Basic " + (0, s.btoa)(c + ":" + f)), n.authorizeRequest({
                     body: (0, s.buildFormData)(p),
                     url: r.get("tokenUrl"),
                     name: i,
@@ -9134,7 +9134,7 @@
                     o = e.scopes,
                     i = e.name,
                     a = e.clientId,
-                    u = e.clientSecret,
+                    u = e.clientucpi,
                     l = {
                         Authorization: "Basic " + (0, s.btoa)(a + ":" + u)
                     },
@@ -9158,12 +9158,12 @@
                     o = t.schema,
                     i = t.name,
                     a = t.clientId,
-                    u = t.clientSecret,
+                    u = t.clientucpi,
                     l = {
                         grant_type: "authorization_code",
                         code: t.code,
                         client_id: a,
-                        client_secret: u,
+                        client_ucpi: u,
                         redirect_uri: n
                     };
                 return r.authorizeRequest({
@@ -9181,7 +9181,7 @@
                     o = t.schema,
                     i = t.name,
                     a = t.clientId,
-                    u = t.clientSecret,
+                    u = t.clientucpi,
                     l = {
                         Authorization: "Basic " + (0, s.btoa)(a + ":" + u)
                     },
@@ -9793,7 +9793,7 @@
         }
     }, function(e, t, n) {
         "use strict";
-        e.exports = "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED"
+        e.exports = "ucpi_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED"
     }, function(e, t, n) {
         "use strict";
         Object.defineProperty(t, "__esModule", {
@@ -29174,7 +29174,7 @@
         e.exports = f
     }, function(e, t, n) {
         "use strict";
-        e.exports = "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED"
+        e.exports = "ucpi_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED"
     }, function(e, t, n) {
         "use strict";
         var r = n(13),
@@ -34514,7 +34514,7 @@
                         h = f.getConfigs() || {},
                         v = p && p.get("username") || "",
                         m = p && p.get("clientId") || h.clientId || "",
-                        g = p && p.get("clientSecret") || h.clientSecret || "",
+                        g = p && p.get("clientucpi") || h.clientucpi || "",
                         y = p && p.get("passwordType") || "request-body";
                     return r.state = {
                         appName: h.appName,
@@ -34522,7 +34522,7 @@
                         schema: l,
                         scopes: [],
                         clientId: m,
-                        clientSecret: g,
+                        clientucpi: g,
                         username: v,
                         password: "",
                         passwordType: y
@@ -34613,15 +34613,15 @@
                             "data-name": "clientId",
                             onChange: this.onInputChange
                         }))), (b === y || b === g || "password" === b && "basic" !== this.state.passwordType) && l.default.createElement(c, null, l.default.createElement("label", {
-                            htmlFor: "client_secret"
-                        }, "client_secret:"), w ? l.default.createElement("code", null, " ****** ") : l.default.createElement(f, {
+                            htmlFor: "client_ucpi"
+                        }, "client_ucpi:"), w ? l.default.createElement("code", null, " ****** ") : l.default.createElement(f, {
                             tablet: 10,
                             desktop: 10
                         }, l.default.createElement("input", {
-                            id: "client_secret",
-                            value: this.state.clientSecret,
+                            id: "client_ucpi",
+                            value: this.state.clientucpi,
                             type: "text",
-                            "data-name": "clientSecret",
+                            "data-name": "clientucpi",
                             onChange: this.onInputChange
                         }))), !w && _ && _.size ? l.default.createElement("div", {
                             className: "scopes"

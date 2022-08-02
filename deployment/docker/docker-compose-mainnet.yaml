@@ -12,15 +12,15 @@ services:
     tty: true
 
   node:
-    image: ghcr.io/scrtlabs/secret-network-node:1.3.0-docker
+    image: ghcr.io/ucpilabs/ucpi-network-node:1.3.0-docker
     devices:
       - /dev/sgx/enclave
       - /dev/sgx/provision
     volumes:
       - /tmp/aesmd:/var/run/aesmd
-      - /tmp/.secretd:/root/.secretd
-      - /tmp/.secretcli:/root/.secretcli
-      - /tmp/.sgx_secrets:/opt/secret/.sgx_secrets
+      - /tmp/.ucpid:/root/.ucpid
+      - /tmp/.ucpicli:/root/.ucpicli
+      - /tmp/.sgx_ucpis:/opt/ucpi/.sgx_ucpis
     environment:
       - SGX_MODE=HW
       - MONIKER
